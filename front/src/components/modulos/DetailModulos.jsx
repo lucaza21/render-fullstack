@@ -10,9 +10,9 @@ function DetailModulos() {
     const [moduloDetail, setModuloDetail] = useState(null)
 
     const loadModuloDetail = async () =>{
-        console.log(`%c trayendo info de http://localhost:8000/api/modulos/detalle/${id_modulo}`, 'color:green');
+        console.log(`%c trayendo info de ${import.meta.env.VITE_BACKEND_URL}/api/modulos/detalle/${id_modulo}`, 'color:green');
         try {
-            fetch(`http://localhost:8000/api/modulos/detalle/${id_modulo}`)
+            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/modulos/detalle/${id_modulo}`)
             .then (response => response.json())
             .then (result => setModuloDetail(result))
         } catch (error){
