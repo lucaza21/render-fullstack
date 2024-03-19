@@ -1,0 +1,21 @@
+.footer {
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.heather {
+    background-color: #DD1A19;
+    height: 80PX;
+    text-align: center;
+    display: none;
+}
+
+#divFlotante {
+    background-color: cadetblue;
+    position: fixed;
+    z-index: 100;
+    /*Crea una capa nueva por encima, si tenemos una con valor 2 estará a una altura o por encima de una con 
+                  valor 1*/
+    margin-left: 65%;
+    /*Con este margen posicionamos el div donde queramos*/
+}
