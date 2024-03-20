@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, Link } from "react-router-dom"
 
 import { Journals, FilePlay } from 'react-bootstrap-icons'
+import Player from '../Player/Player'
 
 function DetailModulos() {
 
@@ -59,6 +60,7 @@ function DetailModulos() {
                                         <p>{video.fName}</p>
                                     </article>
                                 </Link>
+                                <Player url={video.url}/>
                             </>)
                         })}
                         
