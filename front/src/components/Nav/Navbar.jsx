@@ -31,6 +31,9 @@ function Navbarr() {
                 <Nav.Item>
                     <Nav.Link as={NavLink} to="/cursos">Cursos</Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link as={NavLink} to="/sidebar">SideBar</Nav.Link>
+                </Nav.Item>
                 
                 {
                     (user) && (user.role=='admin') && (

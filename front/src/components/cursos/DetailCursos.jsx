@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, Link } from "react-router-dom"
 
-import { Trash, FolderFill } from 'react-bootstrap-icons'
+import Sidebar from '../Sidebar/Sidebar'
 
 function DetailCursos() {
 
@@ -31,30 +31,9 @@ const { id_curso } = useParams()
 
   return (
     <>
-        { cursoDetail == null ? <div>DetailCursos</div> :<>
-            <div className='coaster-detail'>los Detalles de... {cursoDetail.titulo} con id: {id_curso}</div>
-            <hr />
-            <br />
-            {
-                cursoDetail.modulos.map(modulo => {
-                    return(<>
-                    {/* {JSON.stringify(modulo)} */}
-                        <Link to={`/modulosDetail/${modulo.id_modulo}`}>
-                            <article key={modulo.id_modulo} style={{display:'inline-block', width: '200px', height: '200px'}}>
-                                {/* <img src={coasterDetail.imageUrl} alt='img' style={{ width: '200px', height: '200px'}}></img> */}
-                                <FolderFill  size={35} />
-                                <h3>{modulo.id_modulo}</h3>
-                                <p>{modulo.nombre_modulo}</p>
-                            </article>
-                        </Link>
-                    </>)
-                })
-            }
-            </>
-        }
-        <br />
-        <br />
-        <Link to="/cursos"> Volver al inicio</Link>
+    
+        <Link to="/cursos"> Volver al listado de cursos </Link>
+        <Sidebar cursoDetail={cursoDetail}/>
     </>
   )
 }

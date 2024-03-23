@@ -13,6 +13,7 @@ import DetailCursos from './components/cursos/DetailCursos';
 import DetailModulos from './components/modulos/DetailModulos';
 import DetailActividades from './components/actividades/DetailActividades';
 import Navbarr from './components/Nav/Navbar';
+import Sidebar from './components/Sidebar/Sidebar';
 
 function App() {
 
@@ -80,6 +81,15 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/sidebar"
+          element={
+            <PrivateRoute>
+              <Sidebar />
+            </PrivateRoute>
+          }
+        />
+        
         {/*fin del módulo de alumno */}
         <Route path="*" element={<Navigate to="." replace />} />
       </Routes>
