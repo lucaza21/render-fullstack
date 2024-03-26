@@ -60,7 +60,7 @@ module.exports.detalle_actividad = (req, res, next) => {
     const id_actividad = req.params.id
     Actividad.findOne(
         { 
-            where: {id_modulo: id_actividad},
+            where: {id_actividad: id_actividad},
             //attributes:['id_modulo','id_curso','nombre_modulo',], 
             //raw:true
             include: [
@@ -134,7 +134,8 @@ module.exports.crear_actividad = (req, res, next) => {
                 public_id: responseUploader.public_id,
                 url: responseUploader.url,
                 folder: responseUploader.folder,
-                archivos: []
+                archivos: [],
+                entregas: []
             }]
             return body
         }).then(newActividad => {

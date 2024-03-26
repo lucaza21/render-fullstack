@@ -14,6 +14,7 @@ import DetailModulos from './components/modulos/DetailModulos';
 import DetailActividades from './components/actividades/DetailActividades';
 import Navbarr from './components/Nav/Navbar';
 import Sidebar from './components/Sidebar/Sidebar';
+import CargarArch from './components/CargarArch/CargarArch';
 
 function App() {
 
@@ -82,10 +83,10 @@ function App() {
           }
         />
         <Route
-          path="/sidebar"
+          path="/cargar"
           element={
             <PrivateRoute>
-              <Sidebar />
+              <CargarArch />
             </PrivateRoute>
           }
         />
