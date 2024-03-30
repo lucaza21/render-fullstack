@@ -9,6 +9,7 @@ function Sidebar({ cursoDetail }) {
 
     const [archUrl, setArchUrl] = useState("")
 
+
     const handleUrl = (url) => {
         console.log(url)
         setArchUrl(url)
@@ -19,7 +20,12 @@ function Sidebar({ cursoDetail }) {
     <div className='container-fluid '>
         <div className='row'>
             <div className="col">
-                <Player url={archUrl} />
+                {archUrl.includes("pdf") ? 
+                <>
+                    <iframe src={archUrl} width="640px" height="360px" />
+                </> : <>
+                    <Player url={archUrl} />
+                </>}
             </div>
             <div className="col">
                 <ModuleList cursoDetail={cursoDetail} handleUrl={handleUrl} />

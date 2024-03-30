@@ -7,7 +7,7 @@ import Footer from './components/footer';
 import Heather from './components/heather';
 import LayoutProfesor from './components/routes/LayoutProfesor';
 import LayoutAlumno from './components/routes/LayoutAlumno';
-import Navbar from './components/Nav/Navbar';
+
 import GetCursos from './components/cursos/GetCursos';
 import DetailCursos from './components/cursos/DetailCursos';
 import DetailModulos from './components/modulos/DetailModulos';

@@ -208,7 +208,7 @@ module.exports.subirArchivos = (req, res, next) => {
         })
     };
 
-module.exports.eliminar_actividad = async (req, res, next) => {
+module.exports.eliminar_actividad = (req, res, next) => {
     const id_actividad = req.params.id
     Actividad.findOne(
         { 
@@ -220,10 +220,13 @@ module.exports.eliminar_actividad = async (req, res, next) => {
                 throw new Error("La actividad mencionada no existe")
             }
             folder = actividad.ruta_actividad[0].folder
+            console.log(folder)
             return deleteAllImages(folder)
         }).then(response => {
+            console.log(response)
             return deleteFolder(folder)
         }).then(response => {
+            console.log(response)
             Actividad.destroy({
                 where: {
                         id_actividad: id_actividad

@@ -1,6 +1,8 @@
 import React from 'react'
 import { FilePlay, FolderFill } from 'react-bootstrap-icons'
 import ModulesArch from './ModulesArch'
+import ModulesAct from './ModulesAct'
+
 
 function Modules({ modulo, handleUrl }) {
   return (
@@ -12,6 +14,7 @@ function Modules({ modulo, handleUrl }) {
         </div>
         <div>
           <ModulesArch modulo={modulo} handleUrl={handleUrl}/>
+          <ModulesAct modulo={modulo} handleUrl={handleUrl}/>
         </div>
     </div>
       
