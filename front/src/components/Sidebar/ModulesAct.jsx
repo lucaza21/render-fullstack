@@ -1,6 +1,8 @@
 import React from 'react'
-import { Archive } from 'react-bootstrap-icons'
+import { Archive, FileArrowUp } from 'react-bootstrap-icons'
 import ActivityArch from './ActivityArch'
+
+import { useParams, Link } from "react-router-dom"
 
 function ModulesAct({ modulo, handleUrl }) {
     return (
@@ -13,6 +15,12 @@ function ModulesAct({ modulo, handleUrl }) {
                         <div class="">{actividad.nombre_actividad}</div>
                     </div>
                     <ActivityArch actividad={actividad} handleUrl={handleUrl} />
+                    <Link to={`/cargar/${actividad.id_actividad}`}>
+                        <div className='d-flex align-items-center justify-content-between'>
+                            <div class=""><FileArrowUp  size={20} /></div>
+                            <div class="">Entregar Actividad {actividad.id_actividad}</div>
+                        </div>
+                    </Link>
                 </>)
             })}
         </>

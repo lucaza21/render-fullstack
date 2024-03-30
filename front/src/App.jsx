@@ -83,7 +83,7 @@ function App() {
           }
         />
         <Route
-          path="/cargar"
+          path="/cargar/:id_actividad"
           element={
             <PrivateRoute>
               <CargarArch />

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
+import { useParams, Link } from "react-router-dom"
+
 function CargarArch() {
+
+    const { id_actividad } = useParams()
 
     const [file, setFile] = useState(null)
     const [comment, setComment] = useState("")
@@ -34,7 +38,7 @@ function CargarArch() {
         formData.append('file', file)
         formData.append('comment', comment)
 
-        fetch('http://localhost:8000/api/entregas/crear/3/1', {
+        fetch(`http://localhost:8000/api/entregas/crear/${id_actividad}/1`, {
             method: 'POST',
             body: formData
         })
