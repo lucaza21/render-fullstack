@@ -15,6 +15,7 @@ import DetailActividades from './components/actividades/DetailActividades';
 import Navbarr from './components/Nav/Navbar';
 import Sidebar from './components/Sidebar/Sidebar';
 import CargarArch from './components/CargarArch/CargarArch';
+import Calificaciones from './components/Calificaciones/Calificaciones';
 
 function App() {
 
@@ -87,6 +88,14 @@ function App() {
           element={
             <PrivateRoute>
               <CargarArch />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/calificaciones"
+          element={
+            <PrivateRoute>
+              <Calificaciones />
             </PrivateRoute>
           }
         />

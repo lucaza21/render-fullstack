@@ -32,7 +32,7 @@ function Navbarr() {
                     <Nav.Link as={NavLink} to="/cursos">Cursos</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link as={NavLink} to="/cargar">Cargar</Nav.Link>
+                    <Nav.Link as={NavLink} to="/calificaciones">Calificaciones</Nav.Link>
                 </Nav.Item>
                 
                 {
