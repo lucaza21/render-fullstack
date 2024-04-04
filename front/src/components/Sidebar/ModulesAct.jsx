@@ -4,7 +4,8 @@ import ActivityArch from './ActivityArch'
 
 import { useParams, Link } from "react-router-dom"
 
-function ModulesAct({ modulo, handleUrl }) {
+function ModulesAct({ modulo, handleUrl, id_curso }) {
+
     return (
         <>
             {modulo.actividades.toReversed().map(actividad => {
@@ -15,7 +16,7 @@ function ModulesAct({ modulo, handleUrl }) {
                         <div class="">{actividad.nombre_actividad}</div>
                     </div>
                     <ActivityArch actividad={actividad} handleUrl={handleUrl} />
-                    <Link to={`/cargar/${actividad.id_actividad}`}>
+                    <Link to={{ pathname:`/cargar/${actividad.id_actividad}`}} state={{id_curso:id_curso}}>
                         <div className='d-flex align-items-center justify-content-between'>
                             <div class=""><FileArrowUp  size={20} /></div>
                             <div class="">Entregar Actividad {actividad.id_actividad}</div>

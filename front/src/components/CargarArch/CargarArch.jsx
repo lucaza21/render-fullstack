@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
-import { useParams, Link } from "react-router-dom"
+import { useParams, Link, useLocation } from "react-router-dom"
 
-function CargarArch() {
+function CargarArch( props ) {
 
     const { id_actividad } = useParams()
 
@@ -12,6 +12,12 @@ function CargarArch() {
     
     const [upload, setUpload] = useState(null)
     const [uploadClick, setUploadClick] = useState(false)
+
+    //const { id_curso } = props.location;
+    let { state } = useLocation();
+    console.log(state)
+
+    const { id_curso } = state
 
     //console.log("upload: " , upload)
     //console.log("uploadClick: " , uploadClick)
@@ -74,7 +80,7 @@ function CargarArch() {
     }
   return (
     <>
-    <div>CargarArch</div>
+    <Link to={`/cursosDetail/${id_curso}`}>Volver al curso</Link>
     <div id="content" className="py-6">  
         <input id="fileinput" className='form-control w-2/3' 
             type="file" onChange={selectedHandler}/>

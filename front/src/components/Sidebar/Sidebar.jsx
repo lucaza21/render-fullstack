@@ -5,7 +5,7 @@ import { Journals, FilePlay, FolderFill } from 'react-bootstrap-icons'
 import Player from '../Player/Player'
 import ModuleList from './ModuleList'
 
-function Sidebar({ cursoDetail }) {
+function Sidebar({ cursoDetail, id_curso }) {
 
     const [archUrl, setArchUrl] = useState("")
 
@@ -28,7 +28,7 @@ function Sidebar({ cursoDetail }) {
                 </>}
             </div>
             <div className="col">
-                <ModuleList cursoDetail={cursoDetail} handleUrl={handleUrl} />
+                <ModuleList cursoDetail={cursoDetail} handleUrl={handleUrl} id_curso={id_curso}/>
             </div>
             {/* {JSON.stringify(cursoDetail)} */}
         </div>   

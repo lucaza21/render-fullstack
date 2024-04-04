@@ -4,7 +4,7 @@ import ModulesArch from './ModulesArch'
 import ModulesAct from './ModulesAct'
 
 
-function Modules({ modulo, handleUrl }) {
+function Modules({ modulo, handleUrl, id_curso }) {
   return (
     <>
     <div className='d-flex flex-column align-items-center justify-content-center'>
@@ -14,7 +14,7 @@ function Modules({ modulo, handleUrl }) {
         </div>
         <div>
           <ModulesArch modulo={modulo} handleUrl={handleUrl}/>
-          <ModulesAct modulo={modulo} handleUrl={handleUrl}/>
+          <ModulesAct modulo={modulo} handleUrl={handleUrl} id_curso={id_curso}/>
         </div>
     </div>
       

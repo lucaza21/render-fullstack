@@ -33,7 +33,7 @@ const { id_curso } = useParams()
     <>
     
         <Link to="/cursos"> Volver al listado de cursos </Link>
-        <Sidebar cursoDetail={cursoDetail}/>
+        <Sidebar cursoDetail={cursoDetail} id_curso={id_curso}/>
     </>
   )
 }

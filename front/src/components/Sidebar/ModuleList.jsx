@@ -5,7 +5,7 @@ import { Journals, FilePlay, FolderFill } from 'react-bootstrap-icons'
 import Player from '../Player/Player'
 import Modules from './Modules'
 
-function ModuleList({ cursoDetail, handleUrl }) {
+function ModuleList({ cursoDetail, handleUrl, id_curso }) {
 
     
   return (
@@ -20,7 +20,7 @@ function ModuleList({ cursoDetail, handleUrl }) {
                     return(<>
                     {/* {JSON.stringify(modulo)} */}
                         <div >
-                            <Modules key={modulo.id_modulo} modulo={modulo} handleUrl={handleUrl}/>
+                            <Modules key={modulo.id_modulo} modulo={modulo} handleUrl={handleUrl} id_curso={id_curso}/>
                         </div>
                         {/*<!-- Divider -->*/}
                         <hr className="sidebar-divider"/>
