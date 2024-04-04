@@ -3,8 +3,8 @@ import NameCurses from './NameCurses'
 
 function Calificaciones() {
   return (<>
-    <div>Calificaciones</div>
-    <div className='Container'>
+    {/* <div>Calificaciones</div> */}
+    <div className='container'>
       <NameCurses />
     </div>
 
