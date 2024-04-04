@@ -31,9 +31,18 @@ const { id_curso } = useParams()
 
   return (
     <>
-    
+    {cursoDetail?.modulos[0]?.id_modulo ?
+      <>
         <Link to="/cursos"> Volver al listado de cursos </Link>
         <Sidebar cursoDetail={cursoDetail} id_curso={id_curso}/>
+      </> :
+      <>
+        <Link to="/cursos"> Volver al listado de cursos </Link>
+        <div><h4> Este curso no tiene modulos disponibles</h4></div>
+      </>
+        }
+        
+        
     </>
   )
 }
