@@ -5,12 +5,14 @@ import ModulesAct from './ModulesAct'
 
 
 function Modules({ modulo, handleUrl, id_curso }) {
+
+  console.log("render Modules")
   return (
     <>
     <div className='d-flex flex-column align-items-center justify-content-center'>
         <div className='d-flex align-items-center justify-content-center my-1'>
-          <div class=""><FolderFill  size={20} /></div>
-          <div class="mx-2">{modulo.nombre_modulo}</div>
+          <div className=""><FolderFill  size={20} /></div>
+          <div className="mx-2">{modulo.nombre_modulo}</div>
         </div>
         <div>
           <ModulesArch modulo={modulo} handleUrl={handleUrl}/>

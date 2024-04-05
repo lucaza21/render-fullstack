@@ -78,6 +78,8 @@ function CargarArch( props ) {
         document.getElementById('fileinput').value = null
         setFile(null)
     }
+
+    console.log("render CargarArch")
   return (
     <>
     <Link to={`/cursosDetail/${id_curso}`}>Volver al curso</Link>
