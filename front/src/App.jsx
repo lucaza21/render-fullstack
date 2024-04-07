@@ -19,7 +19,7 @@ import Calificaciones from './components/Calificaciones/Calificaciones';
 
 function App() {
 
-  localStorage.setItem('@user', JSON.stringify({
+/*   localStorage.setItem('@user', JSON.stringify({
     logedUser: {
         token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImV4cCI6MTcxMjQ1NzYzNi4wNCwiaWF0IjoxNzEyNDU0MDM2fQ.xp7J8j10HVRd7-4CD97AQTRSzwZhAoGS3aNWXm5r8uE",
         alumno: {
@@ -33,7 +33,7 @@ function App() {
   let user = localStorage.getItem('@user');
   user = JSON.parse(user)
  
-  console.log('desde App con routes: ' + JSON.stringify(user));
+  console.log('desde App con routes: ' + JSON.stringify(user)); */
 
 
   return (

@@ -45,7 +45,7 @@ module.exports.login_alumnos = (req, res) => {
                             logedUser:
                                 { 
                                     token:token, 
-                                    alumno:{id_alumno:alumno.id_alumno, usuario: alumno.usuario, correo: alumno.correo} 
+                                    user:{id:alumno.id_alumno, usuario: alumno.usuario, correo: alumno.correo} 
                                 }
                         })
                     //return res.send({"match": match})

@@ -17,7 +17,7 @@ function Login() {
         dismissError()
         event.preventDefault()
         let a = readyToSubmit();
-        console.log("readytosubmit " + a)
+        //console.log("readytosubmit " + a)
         if (!readyToSubmit()) {
             setErrorMsg("Escriba un usuario y una contraseña válidos")
             return
@@ -25,9 +25,9 @@ function Login() {
         try {
             await login(username, password, perfil)
             if (perfil === "alumno"){
-                navigate("/cursos")
+                navigate("/alumno")
             } else if(perfil === "profesor"){
-                navigate("/cursos")
+                navigate("/profesor")
             }            
         } catch (e) {
             setErrorMsg("Acceso incorrecto, usuario o contraseña incorrectos, inténtelo de nuevo")
@@ -40,7 +40,7 @@ function Login() {
 
     function onChangeUsername(e) {
         setUsername(e.target.value)
-        console.log(e.target.value)
+        //console.log(e.target.value)
         onChangeAnyInput()
     }
 
@@ -50,7 +50,7 @@ function Login() {
     }
 
     function onChangePerfil(e) {
-        console.log("impresion on Change Perfil: "+e.target.value)
+        //console.log("impresion on Change Perfil: "+e.target.value)
         setPerfil(e.target.value)
         onChangeAnyInput()
     }
@@ -65,7 +65,7 @@ function Login() {
         setErrorMsg("")
     }
 
-    console.log(isLoading)
+    //console.log(isLoading)
     return (
         <section className=" text-center text-lg-start">
             <style

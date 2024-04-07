@@ -57,7 +57,7 @@ function Navbarr() {
         (user != null) ? (
             <>
                 <Nav.Item>
-                    <Nav.Link >Hola {user.email}</Nav.Link>
+                    <Nav.Link >Hola {user.usuario}</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link  onClick={() => logOut()}>Logout</Nav.Link>

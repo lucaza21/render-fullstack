@@ -3,7 +3,16 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import icono_home from '../../assets/iconos/home.png';
 
+import { Navigate } from 'react-router-dom';
+import { Nav } from 'react-bootstrap';
+
 function LayoutProfesor(){
+
+  const logOut = () =>{
+    Navigate("/");
+    localStorage.clear();
+  }
+
     return (
         <>
           <Navbar className="bg-body-tertiary">
@@ -60,11 +69,14 @@ function LayoutProfesor(){
                   height="30"
                   className="d-inline-block align-top"
                   alt="React Bootstrap logo"
-                /> {' '}
+                /> 
                 Cerrar sesión
               </Navbar.Brand>
+              
             </Container>
           </Navbar>
+          
+          <Nav.Link  onClick={() => logOut()}>Logout</Nav.Link>
         </>
       );
     }
