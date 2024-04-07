@@ -25,9 +25,9 @@ function Login() {
         try {
             await login(username, password, perfil)
             if (perfil === "alumno"){
-                navigate("/alumno")
+                navigate("/cursos")
             } else if(perfil === "profesor"){
-                navigate("/profesor")
+                navigate("/cursos")
             }            
         } catch (e) {
             setErrorMsg("Acceso incorrecto, usuario o contraseña incorrectos, inténtelo de nuevo")

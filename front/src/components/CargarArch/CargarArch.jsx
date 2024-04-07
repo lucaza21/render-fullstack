@@ -22,6 +22,12 @@ function CargarArch( props ) {
     //console.log("upload: " , upload)
     //console.log("uploadClick: " , uploadClick)
 
+    let user = localStorage.getItem('@user');
+    user = JSON.parse(user)
+   
+    console.log('desde CargarArch: ' + JSON.stringify(user.logedUser.alumno));
+    let alumno = user.logedUser.alumno;
+
     const selectedHandler = (e) => {
         console.log(e.target.files[0])
         setFile(e.target.files[0])
@@ -44,7 +50,7 @@ function CargarArch( props ) {
         formData.append('file', file)
         formData.append('comment', comment)
 
-        fetch(`http://localhost:8000/api/entregas/crear/${id_actividad}/1`, {
+        fetch(`http://localhost:8000/api/entregas/crear/${id_actividad}/${alumno.id_alumno}`, {
             method: 'POST',
             body: formData
         })
@@ -99,8 +105,8 @@ function CargarArch( props ) {
     {upload !== null ? <>
             {uploadClick == true && (
               <>
-              <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
               </div>
               </>
             )}

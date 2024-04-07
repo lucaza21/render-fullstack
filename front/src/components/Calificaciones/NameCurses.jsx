@@ -2,14 +2,14 @@ import React, {useState, useEffect, Fragment} from 'react'
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { JournalBookmarkFill } from 'react-bootstrap-icons'
 
-function NameCurses() {
+function NameCurses({ alumno }) {
 
     const [cursos, setCursos] = useState([])
 
     const loadCursos = async () =>{
-        console.log(`%c trayendo info de ${import.meta.env.VITE_BACKEND_URL}/api/calificaciones/2`, 'color:green');
+        console.log(`%c trayendo info de ${import.meta.env.VITE_BACKEND_URL}/api/calificaciones/${alumno.id_alumno}`, 'color:green');
         try {
-            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/calificaciones/calificaciones/1`)
+            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/calificaciones/calificaciones/${alumno.id_alumno}`)
             .then (response => response.json())
             .then (result => setCursos(result))
         } catch (error){

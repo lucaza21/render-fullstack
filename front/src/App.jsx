@@ -19,7 +19,17 @@ import Calificaciones from './components/Calificaciones/Calificaciones';
 
 function App() {
 
-  localStorage.setItem('@user', JSON.stringify({email: "admin@admin.com", role:"admin"}))
+  localStorage.setItem('@user', JSON.stringify({
+    logedUser: {
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImV4cCI6MTcxMjQ1NzYzNi4wNCwiaWF0IjoxNzEyNDU0MDM2fQ.xp7J8j10HVRd7-4CD97AQTRSzwZhAoGS3aNWXm5r8uE",
+        alumno: {
+            id_alumno: 1,
+            usuario: "user_alumno1",
+            correo: "alumno1@platf.com"
+        }
+    }
+}))
+
   let user = localStorage.getItem('@user');
   user = JSON.parse(user)
  
