@@ -27,7 +27,7 @@ function Sidebar({ cursoDetail, id_curso }) {
                     <Player url={archUrl} />
                 </>}
             </div>
-            <div className="col overflow-y-scroll" style={{height: "68vh"}}>
+            <div className="col overflow-y-scroll" style={{height: "65vh"}}>
                 <ModuleList cursoDetail={cursoDetail} handleUrl={handleUrl} id_curso={id_curso}/>
             </div>
             {/* {JSON.stringify(cursoDetail)} */}

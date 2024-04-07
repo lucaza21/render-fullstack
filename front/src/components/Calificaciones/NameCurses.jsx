@@ -64,9 +64,10 @@ function NameCurses() {
   return (
     <>
         {cursos ? <>
-            <Fragment>
+            <div className='overflow-y-scroll container' style={{height: "65vh", width: '930px'}}>
+            <Link to="/cursos"> Volver al listado de cursos </Link>
                 {cursos.map(curso => (
-                    <div key={curso.id_curso}>
+                    <div key={curso.id_curso} >
                         <div  className='d-flex align-items-center justify-content-between'>
                                 <div className=""><h3>{curso.titulo}</h3></div>
                                 <div className=""><JournalBookmarkFill size={20} /></div>
@@ -98,7 +99,7 @@ function NameCurses() {
                         <Link to={`/cursosDetail/${curso.id_curso}`}>Ver Curso</Link>
                     </div>
                 ))}
-            </Fragment>
+            </div>
             </> : <> Cargando..</> }
     </>
   )

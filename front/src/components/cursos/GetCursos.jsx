@@ -36,7 +36,7 @@ function GetCursos() {
 
   console.log("render GetCursos")
   return (
-    <div className="overflow-y-scroll d-flex align-items-center justify-content-around" style={{height: "63vh", width: '930px'}}>
+    <div className="overflow-y-scroll d-flex align-items-center justify-content-around" style={{height: "65vh", width: '930px'}}>
         {/* <div>GetCursos</div> */}
         {cursos.map(curso =>{
           return (
