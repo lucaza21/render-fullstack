@@ -36,15 +36,15 @@ function GetCursos() {
 
   console.log("render GetCursos")
   return (
-    <Fragment>
+    <div className="overflow-y-scroll d-flex align-items-center justify-content-around" style={{height: "63vh", width: '930px'}}>
         {/* <div>GetCursos</div> */}
         {cursos.map(curso =>{
           return (
-            <Fragment key={curso.id_curso}>
+            <Fragment key={curso.id_curso} >
               <Link to={`/cursosDetail/${curso.id_curso}`}>
                 <article className='coaster-card '>
                 <h3>{curso.titulo}</h3>
-                  <img src={img_cursos} alt='img' width={300} height={300}></img>
+                  <img src={img_cursos} alt='img' width={200} height={200}></img>
                   {/* <h2>{curso.profesor}</h2> */}
                 </article>
               </Link>
@@ -58,7 +58,7 @@ function GetCursos() {
           )
         })}
 
-    </Fragment>
+    </div>
     
   )
 }

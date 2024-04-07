@@ -17,17 +17,17 @@ function Sidebar({ cursoDetail, id_curso }) {
 
   return (
     <>
-    <div className='container-fluid '>
+    <div className='container-fluid' >
         <div className='row'>
             <div className="col">
                 {archUrl.includes("pdf") ? 
-                <>
+                <div className='container my-2'>
                     <iframe src={archUrl} width="640px" height="360px" />
-                </> : <>
+                </div> : <>
                     <Player url={archUrl} />
                 </>}
             </div>
-            <div className="col">
+            <div className="col overflow-y-scroll" style={{height: "68vh"}}>
                 <ModuleList cursoDetail={cursoDetail} handleUrl={handleUrl} id_curso={id_curso}/>
             </div>
             {/* {JSON.stringify(cursoDetail)} */}
