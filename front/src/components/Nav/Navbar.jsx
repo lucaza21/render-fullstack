@@ -6,7 +6,6 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 function Navbarr() {
 
 
-
     let user = localStorage.getItem('@user');
     user = JSON.parse(user)
    
@@ -21,7 +20,7 @@ function Navbarr() {
 
   return (
     <>
-   <Nav variant="pills" defaultActiveKey="/home">
+   <Nav variant="pills" defaultActiveKey="/home" className='d-flex align-items-center justify-content-around'>
         {
             (user != null) ? 
             (<>
@@ -30,6 +29,9 @@ function Navbarr() {
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link as={NavLink} to="/cursos">Cursos</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link as={NavLink} to="/calificaciones">Calificaciones</Nav.Link>
                 </Nav.Item>
                 
                 {
@@ -44,7 +46,7 @@ function Navbarr() {
             </>) : (<>
                 
                 <Nav.Item>
-                    <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
+                    <Nav.Link as={NavLink} to="/">Home</Nav.Link>
                 </Nav.Item>
                 
             </>)
@@ -55,7 +57,7 @@ function Navbarr() {
         (user != null) ? (
             <>
                 <Nav.Item>
-                    <Nav.Link >Hola {user.email}</Nav.Link>
+                    <Nav.Link >Hola {user.usuario}</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link  onClick={() => logOut()}>Logout</Nav.Link>

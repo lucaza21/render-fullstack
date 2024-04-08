@@ -1,0 +1,27 @@
+html {
+    min-height: 100%;
+    position: relative;
+  }
+
+
+.cont {
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+hr {
+    border-color: #DD1A19;
+  }
+
+
+.heather {
+    background-color: #DD1A19;
+    height: 80px;
+    margin: 0px;
+    padding-left: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 60px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: small;
+}

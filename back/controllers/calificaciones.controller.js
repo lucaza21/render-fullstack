@@ -49,13 +49,23 @@ module.exports.listar_calificacion = (req, res, next) => {
 
 module.exports.crear_calificacion = (req, res, next) => {
     //console.log(req.body)
+    const id_entrega = req.params.id_entrega
     const body = req.body;
+    body.id_entrega = id_entrega
     console.log(body)
 
     //crear nuevo curso
-    Calificacion.create(body)
-    .then((curso) => {
-        return res.status(201).json( { curso:curso } )
+    Entrega.findOne({where: {id_entrega: id_entrega}})
+    .then(entrega =>{
+        if(entrega === null){
+            throw new Error("La Entrega mencionada no existe")
+        }
+        Calificacion.create(body)
+    }).then(calificacion => {
+        if(calificacion === null){
+            throw new Error("No se pudo crear la Calificacion")
+        }
+        return res.status(201).json( {message:`Calificaión Creada`} )
     })
     .catch((error) =>{
         return res.status(400).json({ message: `Error creando calificacion: ${error.message}`});
@@ -128,42 +138,64 @@ module.exports.bulk_calificacion = (req, res, next) => {
     
 };
 
-/* module.exports.eliminar_catCursos = async (req, res, next) => {
-    const id = req.params.id
-
-    await catCursos.findOne(
+module.exports.calificaciones = (req, res, next) => {
+    //console.log(req.body)
+    const id_alumno = req.params.id_alumno
+    CatCursos.findAll(
         { 
-            where: {id_curso: id}
-        }
+            attributes: ["id_curso","titulo"],
+            include:
+                [
+                    {
+                        model: Modulo,
+                        as: 'modulos',
+                        attributes: ["id_modulo","nombre_modulo"],
+                        raw: true,
+                        include:[
+                            {
+                            model: Actividad,
+                            as:'actividades', 
+                            attributes: ["id_actividad","nombre_actividad", "ponderacion_actividad"],
+                            raw: true,
+                            include:[
+                                {
+                                    model: Entrega,
+                                    as: 'entrega_actividades',
+                                    attributes: ["id_entrega","id_alumno"],
+                                    where: {id_alumno: id_alumno},
+                                    raw: true,
+                                    include:[
+                                        {
+                                            model: Calificacion,
+                                            as: 'calificaciones',
+                                            attributes: ["id_calificacion","calificacion"],
+                                            raw: true,
+                                        }
+                                    ]
+                                }
+                            ]
+                            }
+                        ]       
+                    },
+                ], 
+            }
         ).then(response => {
-            //console.log(response.ruta_material_didactico.includes("public_id"))
-            if(response.ruta_material_didactico.includes("public_id"))
-                {
-                    deleteImage(JSON.parse(response.ruta_material_didactico)[0].public_id)
-                    console.log('imagen de cloudinary eliminada')
-                }
-            catCursos.destroy({
-                where: {
-                        id_curso: response.id_curso
-                        }
-                }).then(rowDeleted => {
-                    if(rowDeleted === 0){
-                        return res.status(404).json({message: "curso no existe"});
-                    } else {
-                        console.log("curso eliminado")
-                        //console.log(rowDeleted)
-                        return res.status(204).json();
-                    }
-                }) // rowDeleted will return number of rows deleted
-                .catch((error) =>{
-                    return res.status(400).json({ message: `Error eliminando curso: ${error.message}`});
-                })
+            //console.log(response)
+            /* if(response.modulos > 0){
+                console.log('hola')
+                const valores = response?.modulos?.actividades.map(item => item.id_actividad)
+                console.log(valores)
+            }
             
+            const total = response?.modulos?.actividades?.entrega_actividades?.calificaciones?.calificacion.reduce(
+                (prevValue, currentValue) => {prevValue + currentValue}
+                ,0) ;
+            console.log(total) */
+            return res.status(200).json(response)
+            //res.send("listando cursos desde SQL")
         })
         .catch((error) => {
             return res.status(400).json({message: `Error listando cursos : ${error.message}`});
         });
-             
-   
-};   */
-    
+     
+};

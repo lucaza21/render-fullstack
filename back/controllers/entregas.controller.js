@@ -74,7 +74,7 @@ module.exports.crear_entrega = (req, res, next) => {
             data = actividad.ruta_actividad
             ruta = actividad.ruta_actividad[0].folder
             return uploadImage(req.file.path, ruta, oName)
-        }).then( uploadResponse => {
+        }).then(uploadResponse => {
             //console.log(uploadResponse)
             const existeUrl = data[0].archivos.some(archivo => archivo.url.includes(uploadResponse.url));
             if(existeUrl){
@@ -98,7 +98,7 @@ module.exports.crear_entrega = (req, res, next) => {
             /* const id_actividad = 12
             const id_alumno = 3 */
             const fecha_entrega = new Date()
-            const comentario_entrega = req.body.coment
+            const comentario_entrega = req.body.comment
             const ruta_entrega = [
                     newArchivo[0].archivos[newArchivo[0].archivos.length -1],
                     {
@@ -122,7 +122,7 @@ module.exports.crear_entrega = (req, res, next) => {
             if(responsEntrega=== null){
                 throw new Error("No se pudo crear la actividad")
             }
-            return res.status(201).json( {message:`Se ha subido el archivo ${req.file.originalname} a la carpeta ${ruta}`, curso: responsEntrega } )
+            return res.status(201).json( {message:`image saved. Se ha subido el archivo ${req.file.originalname} a la carpeta ${ruta}`, curso: responsEntrega } )
         }).catch(error => {
             fs.unlink(req.file.path)
             return res.status(400).json({Error: `Error subiendo el archivo - ${error.name}: ${error.message}`});
@@ -141,6 +141,90 @@ module.exports.crear_entrega = (req, res, next) => {
     }) */
      
 };
+
+/* module.exports.subirArchivo = (req, res, next) => {
+
+    const id_alumno = req.params.id_alumno
+    const id_actividad = req.params.id_actividad
+    //const body = req.body;
+    //console.log(req.file)
+    //console.log(req.body)
+
+    if (req.file == null) {
+        return res.status(400).json({Error: `Error subiendo el archivo - No se seleccionó ningún archivo. `});
+    }
+
+    oName = req.file.originalname.split('.')[0]
+    console.log(req.file)
+    Actividad.findOne(
+        { 
+            where: {id_actividad: id_actividad},
+            attributes:['id_actividad','id_modulo', 'nombre_actividad', 'ruta_actividad'],
+            raw: true 
+        }).then(actividad => {
+            if(actividad === null){
+                throw new Error("La Actividad mencionada no existe")
+            }
+            data = actividad.ruta_actividad
+            ruta = actividad.ruta_actividad[0].folder
+            return uploadImage(req.file.path, ruta, oName)
+        }).then(uploadResponse => {
+            //console.log(uploadResponse)
+            const existeUrl = data[0].archivos.some(archivo => archivo.url.includes(uploadResponse.url));
+            if(existeUrl){
+                throw new Error("Ya hay una Actividad con ese nombre, las actividades no pueden tener el mismo nombre")
+            }
+            newArchivo = [{
+                url: data[0]?.url,
+                folder: data[0]?.folder,
+                public_id: data[0]?.public_id,
+                archivos: [...data[0]?.archivos, {fName:oName, url:uploadResponse.url, pId:uploadResponse.public_id}]
+            }]
+            fs.unlink(req.file.path)
+            return Actividad.update({ ruta_actividad : newArchivo},{
+                where: {id_actividad: id_actividad},
+                })
+        }).then(updated => {
+            if(updated == 0){
+                return res.status(400).json({message: "Registro no fue actualizado."});
+            }
+            
+            //const id_actividad = 12
+            //const id_alumno = 3 
+            const fecha_entrega = new Date()
+            const comentario_entrega = req.body.coment | "entrega_user"
+            const ruta_entrega = [
+                    newArchivo[0].archivos[newArchivo[0].archivos.length -1],
+                    {
+                        folder:newArchivo[0].folder
+                    },
+                    {
+                        public_id:newArchivo[0].public_id
+                    }
+                ]
+
+            const newEntrega = {
+                id_actividad, 
+                id_alumno, 
+                fecha_entrega, 
+                comentario_entrega, 
+                ruta_entrega
+            }
+            //console.log(newEntrega)
+            Entrega.create(newEntrega)
+        }).then(responsEntrega => {
+            if(responsEntrega=== null){
+                throw new Error("No se pudo crear la actividad")
+            }
+            return res.status(201).json( {message:` image savedd. Se ha subido el archivo ${req.file.originalname} a la carpeta ${ruta}`, curso: responsEntrega } )
+        }).catch(error => {
+            fs.unlink(req.file.path)
+            return res.status(400).json({Error: `Error subiendo el archivo - ${error.name}: ${error.message}`});
+        })
+
+    //res.json({message: "image saved"})
+     
+}; */
 
 module.exports.editar_entrega =(req, res, next) =>{
     const id = req.params.id;

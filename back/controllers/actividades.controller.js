@@ -60,7 +60,7 @@ module.exports.detalle_actividad = (req, res, next) => {
     const id_actividad = req.params.id
     Actividad.findOne(
         { 
-            where: {id_modulo: id_actividad},
+            where: {id_actividad: id_actividad},
             //attributes:['id_modulo','id_curso','nombre_modulo',], 
             //raw:true
             include: [
@@ -134,7 +134,8 @@ module.exports.crear_actividad = (req, res, next) => {
                 public_id: responseUploader.public_id,
                 url: responseUploader.url,
                 folder: responseUploader.folder,
-                archivos: []
+                archivos: [],
+                entregas: []
             }]
             return body
         }).then(newActividad => {
@@ -207,7 +208,7 @@ module.exports.subirArchivos = (req, res, next) => {
         })
     };
 
-module.exports.eliminar_actividad = async (req, res, next) => {
+module.exports.eliminar_actividad = (req, res, next) => {
     const id_actividad = req.params.id
     Actividad.findOne(
         { 
@@ -219,10 +220,13 @@ module.exports.eliminar_actividad = async (req, res, next) => {
                 throw new Error("La actividad mencionada no existe")
             }
             folder = actividad.ruta_actividad[0].folder
+            console.log(folder)
             return deleteAllImages(folder)
         }).then(response => {
+            console.log(response)
             return deleteFolder(folder)
         }).then(response => {
+            console.log(response)
             Actividad.destroy({
                 where: {
                         id_actividad: id_actividad

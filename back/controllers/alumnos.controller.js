@@ -40,7 +40,14 @@ module.exports.login_alumnos = (req, res) => {
                         {sub: alumno.id_alumno, exp: Date.now()/1000 + 3600},
                         "super-secret"
                     );
-                    return res.json({token: token})
+                    return res.json( 
+                        {
+                            logedUser:
+                                { 
+                                    token:token, 
+                                    user:{id:alumno.id_alumno, usuario: alumno.usuario, correo: alumno.correo} 
+                                }
+                        })
                     //return res.send({"match": match})
                 }
                 return res.status(401).json({message: "Unauthorized wrong password"})

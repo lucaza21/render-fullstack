@@ -42,7 +42,6 @@ function DetailModulos() {
                     {/* {JSON.stringify(modulo)} */}
                         <Link to={`/actividadDetail/${actividad.id_actividad}`}>
                             <article key={actividad.id_actividad} style={{display:'inline-block', width: '200px', height: '200px'}}>
-                                {/* <img src={coasterDetail.imageUrl} alt='img' style={{ width: '200px', height: '200px'}}></img> */}
                                 <Journals  size={35} />
                                 <h3>{actividad.id_actividad}</h3>
                                 <p>{actividad.nombre_actividad}</p>
@@ -53,7 +52,6 @@ function DetailModulos() {
                                {/*  {JSON.stringify(video)} */}
                                 <Link to={video.url}>
                                     <article key={video.url} style={{display:'inline-block', width: '200px', height: '200px'}}>
-                                        {/* <img src={coasterDetail.imageUrl} alt='img' style={{ width: '200px', height: '200px'}}></img> */}
                                         <FilePlay  size={35} />
                                         {/* {JSON.stringify(actividad.ruta_actividad[0].url)} */}
                                         {/* <h3>{actividad.ruta_actividad[0].archivos[2].url}</h3> */}
