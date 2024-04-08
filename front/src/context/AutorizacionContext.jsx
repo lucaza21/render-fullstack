@@ -43,11 +43,30 @@ export function AuthProvider({ children }) {
       try {
         console.log('entro al try')
         //const result = await mockLogin(username, password, perfil)
-        let apiUrl
+        let apiUrl = ""
+        /* if(perfil=='admin'){
+          try {
+            console.log('entro al try')
+            const result = await mockLogin(username, password, perfil)
+            console.log("imprimier token- "+ result.token);
+            let tok = "eaJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODg0YmJiM2Q0YTRkNDk1ZDYyNGJhYyIsImVtYWlsIjoibHVjYXNmZXJuYW5kZXphcmFnb25AZ21haWwuY29tIiwiaWF0IjoxNjM2MzIyMzA3LCJleHAiOjE2MzYzMjU5MDd9.yxy7uKWXJx5rY8znRBTg5182llyH8Rs9R8C6_SM4LIg"
+            setAuthToken(tok)    
+            console.log("después del setAuthToken");
+            setLogoutIfExpiredHandler(setUser)
+            loadUser()
+          } catch (apiError) {
+            console.log('entro al catch:' + apiError)
+            throw new Error()
+          } finally {
+            console.log('entro al finally')
+            setIsLoading(false)
+          }
+        } */
+
         if(perfil=='alumno'){
           apiUrl = `${import.meta.env.VITE_BACKEND_URL}/api/alumnos/login`;
         }
-        else if(perfil=='profesor'){
+        else if(perfil=='profesor' || perfil=='admin'){
           apiUrl = `${import.meta.env.VITE_BACKEND_URL}/api/profesors/login`;
         }
 

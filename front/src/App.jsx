@@ -16,6 +16,7 @@ import Navbarr from './components/Nav/Navbar';
 import Sidebar from './components/Sidebar/Sidebar';
 import CargarArch from './components/CargarArch/CargarArch';
 import Calificaciones from './components/Calificaciones/Calificaciones';
+import LayoutAdmin from './components/routes/LayoutAdmin';
 
 function App() {
 
@@ -41,6 +42,14 @@ function App() {
       <Heather/>
       {/* <Navbarr /> */}
       <Routes>
+        <Route
+            path="admin/*"
+            element={
+              <PrivateRoute>
+                <LayoutAdmin />
+              </PrivateRoute>
+            }
+        />
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />  
         <Route

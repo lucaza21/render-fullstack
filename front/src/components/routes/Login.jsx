@@ -28,6 +28,8 @@ function Login() {
                 navigate("/alumno")
             } else if(perfil === "profesor"){
                 navigate("/profesor")
+            } else if(perfil === "admin"){
+                navigate("/admin")  
             }            
         } catch (e) {
             setErrorMsg("Acceso incorrecto, usuario o contraseña incorrectos, inténtelo de nuevo")
@@ -156,6 +158,22 @@ function Login() {
                                             htmlFor="flexRadioDefault2"
                                         >
                                             Perfil Profesor
+                                        </label>
+                                    </div>
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input"
+                                            id="admin"
+                                            name="perfil"
+                                            type="radio"
+                                            value="admin"
+                                            onChange={onChangePerfil}
+                                        />
+                                        <label
+                                            className="form-check-label"
+                                            htmlFor="flexRadioDefault1"
+                                        >
+                                            Perfil Administrador
                                         </label>
                                     </div>
                                 </div>
