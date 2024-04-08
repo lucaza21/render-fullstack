@@ -7,9 +7,9 @@ function NameCurses({ alumno }) {
     const [cursos, setCursos] = useState([])
 
     const loadCursos = async () =>{
-        console.log(`%c trayendo info de ${import.meta.env.VITE_BACKEND_URL}/api/calificaciones/${alumno.id_alumno}`, 'color:green');
+        console.log(`%c trayendo info de ${import.meta.env.VITE_BACKEND_URL}/api/calificaciones/${alumno.id}`, 'color:green');
         try {
-            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/calificaciones/calificaciones/${alumno.id_alumno}`)
+            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/calificaciones/calificaciones/${alumno.id}`)
             .then (response => response.json())
             .then (result => setCursos(result))
         } catch (error){

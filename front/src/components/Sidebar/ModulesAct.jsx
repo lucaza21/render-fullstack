@@ -20,7 +20,7 @@ function ModulesAct({ modulo, handleUrl, id_curso }) {
                         <Link to={{ pathname:`/cargar/${actividad.id_actividad}`}} state={{id_curso:id_curso}}>
                             <div className='d-flex align-items-center justify-content-between'>
                                 <div className=""><FileArrowUp  size={20} /></div>
-                                <div className="">Entregar Actividad {actividad.id_actividad}</div>
+                                <div className="">Entregar Actividad</div>
                             </div>
                         </Link>
                     </Fragment>
