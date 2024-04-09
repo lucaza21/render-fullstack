@@ -91,7 +91,7 @@ Actividad.belongsTo(Modulo, {
 
 // one-to-one
 //query desde Actividades - Entregas
-Actividad.hasOne(Entrega, {
+Actividad.hasMany(Entrega, {
   foreignKey: "id_actividad",
   as: 'entrega_actividades',
   onDelete: "cascade",
@@ -103,9 +103,8 @@ Entrega.belongsTo(Actividad,{
   onDelete: "cascade",
 });
 
-
-
 //query desde Alumnos - Entregas
+//one-to-many => hasMany
 Alumno.hasMany(Entrega, {
   foreignKey: "id_alumno",
   as: 'entrega_actividades',

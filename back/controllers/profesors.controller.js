@@ -1,8 +1,11 @@
 //import model
-const { where } = require("sequelize");
 const [DataTypes, sequelize] = require("../SQL/sql.connection.platvirt");
 const CatCurso = require("../models/catcurso.model");
 const Profesor = require("../models/profesor.model");
+const Modulo = require("../models/modulo.model");
+const Entrega = require("../models/entregas.model");
+const Actividad = require("../models/actividades.model");
+const Alumno = require("../models/alumno.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 
@@ -192,24 +195,118 @@ module.exports.bulk = (req, res, next) => {
     
 };
 
-/*
-//-------------------------------------------------------------------------------------------
-module.exports.filter = (req, res) => {
+/* // Define las relaciones entre los modelos
+Profesor.hasMany(CatCurso, { foreignKey: 'id_profesor' });
+CatCurso.hasMany(Modulo, { foreignKey: 'id_curso' });
+Modulo.hasMany(Actividad, { foreignKey: 'id_modulo' });
+Actividad.hasMany(Entrega, { foreignKey: 'id_actividad' }); */
 
-    const criteria = {};
-    const filter = req.query.author;
-    if(filter){
-        criteria.author = new RegExp(req.query.author, "i");
-    }
-    Post.find(criteria)
-        .then((posts)=>{
-            if(posts.length > 0){
-                return res.status(200).json(posts);
-            } else{
-                return res.status(404).json({message: "Author doesnt exist"});
+module.exports.calificaciones = (req, res, next) => {
+    //console.log(req.body)
+    const id_profesor = req.params.id_profesor
+    /* Entrega.findAll(
+        { 
+            attributes: ["id_entrega", "ruta_entrega"],
+            //group:["id_actividad"],
+            include:
+                [
+                    {
+                        model: Actividad,
+                        as:'actividades', 
+                        attributes: ["id_actividad","nombre_actividad"],
+                        //group:["id_modulo"],
+                        raw: true,
+                         include:[
+                            {
+                            model: Modulo,
+                            as: 'modulos',
+                            attributes: ["id_modulo","nombre_modulo"],
+                            raw: true,
+                            include:[
+                                {
+                                    model: CatCurso,
+                                    as:'cat_cursos',
+                                    attributes: ["id_curso","titulo"],
+                                    raw: true,
+                                    include:[
+                                        {
+                                            model: Profesor,
+                                            as: 'profesor',
+                                            where: {id_profesor: id_profesor},
+                                            attributes: ["id_profesor","usuario"],
+                                            raw: true,
+                                        }
+                                    ]
+                                }
+                            ]
+                            }
+                        ]      
+                    },
+                ], 
             }
+        ) */
+        /* CatCurso.findAll(
+            { 
+                attributes: ["id_profesor","titulo"],
+                //where: {id_profesor: id_profesor},
+                //attributes: ["id_entrega","id_actividad","id_alumno", "ruta_entrega"],
+                //group:["id_actividad"],
+                include:
+                    [
+                        {
+                            model: Modulo,
+                            as: 'modulos',
+                            attributes: ["id_modulo","nombre_modulo"],
+                            raw: true,
+                            include:[
+                                {
+                                model: Actividad,
+                                as:'actividades', 
+                                attributes: ["id_modulo","id_actividad","nombre_actividad"],
+                                group:["id_modulo"],
+                                raw: true,
+                                include:[
+                                    {
+                                        model: Entrega,
+                                        as: 'entrega_actividades',
+                                        //where: {id_profesor: id_profesor},
+                                        //attributes: ["id_profesor","usuario"],
+                                        raw: true,
+                                        
+                                    }
+                                ]
+                                }
+                            ]      
+                        },
+                    ], 
+                }
+            ) */
+            // Ahora podemos hacer la consulta
+        Profesor.findAll({
+            where: {id_profesor: id_profesor},
+            include: [{
+            model: CatCurso,
+            as:'cat_cursos',
+            include: [{
+                model: Modulo,
+                as:'modulos',
+                include: [{
+                model: Actividad,
+                as:'actividades',
+                include: [{
+                    model: Entrega,
+                    as:'entrega_actividades'
+                }]
+                }]
+            }]
+            }]
+        }).then(response => {
+            //console.log(response)            
+            return res.status(200).json(response)
+            //res.send("listando cursos desde SQL")
         })
-        .catch((error) =>{
-            return res.status(400).json({ message: `Error listing post: ${error}`});
-        })
-}; */
+        .catch((error) => {
+            return res.status(400).json({message: `Error listando cursos : ${error.message}`});
+        });
+     
+};

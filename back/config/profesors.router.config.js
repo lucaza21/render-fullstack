@@ -13,6 +13,8 @@ router.get("/bulk", profesors.bulk);
 router.delete("/eliminar/:id", profesors.eliminar_profesor);
 router.put("/editar/:id", profesors.editar_profesor);
 
+router.get("/calificaciones/:id_profesor", profesors.calificaciones);
+
 
 /* 
 router.get("/api/users/:id", users.detail);

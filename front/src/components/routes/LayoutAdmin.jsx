@@ -25,7 +25,7 @@ function LayoutAdmin() {
 
   return (
     <>
-      <div className=" container text-center" style={{height: "65vh", width: '930vw'}}>
+      <div className="container overflow-hidden text-center" style={{height: "65vh", width: '930vw'}}>
         <div className="row">
           {/*INICIO SECCIÓN MENÚ*/}
           <div className="col-md-3 border-end">
@@ -41,7 +41,7 @@ function LayoutAdmin() {
                         className="d-inline-block align-top"
                         alt="#"
                       /> {' '}
-                      Ana Laura Ortega Aguilar
+                      Perfil
                     </Link>
                   </Navbar.Brand>
                 </Container>

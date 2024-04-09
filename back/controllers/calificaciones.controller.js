@@ -141,7 +141,7 @@ module.exports.bulk_calificacion = (req, res, next) => {
 module.exports.calificaciones = (req, res, next) => {
     //console.log(req.body)
     const id_alumno = req.params.id_alumno
-    CatCursos.findAll(
+    /* CatCursos.findAll(
         { 
             attributes: ["id_curso","titulo"],
             include:
@@ -179,18 +179,32 @@ module.exports.calificaciones = (req, res, next) => {
                     },
                 ], 
             }
-        ).then(response => {
+        ) */
+                CatCursos.findAll({
+                    attributes: ["id_curso", "titulo"],
+                    include: [{
+                      model: Modulo,
+                      as: 'modulos',
+                      attributes: ["id_modulo", "nombre_modulo"],
+                      include: [{
+                        model: Actividad,
+                        as: 'actividades',
+                        attributes: ["id_actividad", "nombre_actividad", "ponderacion_actividad"],
+                        include: [{
+                          model: Entrega,
+                          as: 'entrega_actividades',
+                          attributes: ["id_entrega", "id_alumno"],
+                          where: { id_alumno: id_alumno }, // Filtro para el alumno específico
+                          include: [{
+                            model: Calificacion,
+                            as: 'calificaciones',
+                            attributes: ["id_calificacion", "calificacion"]
+                          }]
+                        }]
+                      }]
+                    }]
+                  }).then(response => {
             //console.log(response)
-            /* if(response.modulos > 0){
-                console.log('hola')
-                const valores = response?.modulos?.actividades.map(item => item.id_actividad)
-                console.log(valores)
-            }
-            
-            const total = response?.modulos?.actividades?.entrega_actividades?.calificaciones?.calificacion.reduce(
-                (prevValue, currentValue) => {prevValue + currentValue}
-                ,0) ;
-            console.log(total) */
             return res.status(200).json(response)
             //res.send("listando cursos desde SQL")
         })

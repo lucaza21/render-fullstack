@@ -4,103 +4,91 @@ import { JournalBookmarkFill } from 'react-bootstrap-icons'
 
 function NameCurses({ alumno }) {
 
-    const [cursos, setCursos] = useState([])
+    const [cursos, setCursos] = useState([]);
 
-    const loadCursos = async () =>{
-        console.log(`%c trayendo info de ${import.meta.env.VITE_BACKEND_URL}/api/calificaciones/${alumno.id}`, 'color:green');
+    const loadCursos = async () => {
         try {
-            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/calificaciones/calificaciones/${alumno.id}`)
-            .then (response => response.json())
-            .then (result => setCursos(result))
-        } catch (error){
-            console.log(`Error al obtener los datos: %c${error}`, 'color:yellow')
-      }
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/calificaciones/calificaciones/${alumno.id}`);
+            const data = await response.json();
+            setCursos(data);
+        } catch (error) {
+            console.log(`Error al obtener los datos: ${error}`);
+        }
     };
-  
+
     useEffect(() => {
-      try{
-        loadCursos()
-      }
-      catch (error){
-        console.log(`%c${error}`, 'color:yellow')
-    }
-      
+        loadCursos();
     }, []);
 
     const calcularPromedioModulosPorCurso = () => {
         const promediosPorCurso = {};
-
+    
         cursos.forEach(curso => {
-            let totalModulos = 0;
-            let totalPromedioModulos = 0;
-            let numModulosConActividadesCalificadas = 0;
-
+            let totalCalificaciones = 0;
+            let numActividadesCalificadas = 0;
+    
             curso.modulos.forEach(modulo => {
-                let totalCalificaciones = 0;
-                let numActividades = 0;
-
                 modulo.actividades.forEach(actividad => {
-                    if (actividad.entrega_actividades.calificaciones && actividad.entrega_actividades.calificaciones.calificacion !== null) {
-                        totalCalificaciones += actividad.entrega_actividades.calificaciones.calificacion;
-                        numActividades++;
-                    }
+                    actividad.entrega_actividades.forEach(entrega => {
+                        if (entrega.calificaciones && entrega.calificaciones.calificacion !== null) {
+                            totalCalificaciones += entrega.calificaciones.calificacion;
+                            numActividadesCalificadas++;
+                        }
+                    });
                 });
-
-                if (numActividades !== 0) {
-                    totalModulos++;
-                    const promedioModulo = totalCalificaciones / numActividades;
-                    totalPromedioModulos += promedioModulo;
-                    numModulosConActividadesCalificadas++;
-                }
             });
-
-            const promedioModulosCurso = numModulosConActividadesCalificadas !== 0 ? totalPromedioModulos / numModulosConActividadesCalificadas : 0;
-            promediosPorCurso[curso.id_curso] = promedioModulosCurso;
+    
+            const promedioCurso = numActividadesCalificadas !== 0 ? totalCalificaciones / numActividadesCalificadas : 0;
+            promediosPorCurso[curso.id_curso] = promedioCurso;
         });
-
+    
         return promediosPorCurso;
     };
 
   return (
     <>
-        {cursos ? <>
-            <Link to="/cursos"> Volver al listado de cursos </Link>
-            <div className='overflow-y-scroll container' style={{height: "65vh", width: '930px'}}>
-                {cursos.map(curso => (
-                    <div key={curso.id_curso} >
-                        <div  className='d-flex align-items-center justify-content-between'>
-                                <div className=""><h3>{curso.titulo}</h3></div>
-                                <div className=""><JournalBookmarkFill size={20} /></div>
-                        </div>
-                        {curso.modulos.map(modulo => (
-                            <div key={modulo.id_modulo}>
-                                {modulo.actividades.some(actividad => actividad.entrega_actividades.calificaciones && actividad.entrega_actividades.calificaciones.calificacion !== null) && (
-                                    <>
-                                        <div  className='d-flex align-items-center justify-content-end'>
-                                            {/* <div className=""><JournalBookmarkFill size={20} /></div> */}
-                                            <div className=""><h4>{modulo.nombre_modulo}</h4></div>
-                                        </div>
-                                        <div>
-                                            {modulo.actividades.map(actividad => (
-                                                actividad.entrega_actividades.calificaciones && actividad.entrega_actividades.calificaciones.calificacion !== null && (
-                                                    <div key={actividad.id_actividad}>
-                                                        <div className='d-flex align-items-center justify-content-end'>
-                                                            <div className=""><p>Nota: {actividad.nombre_actividad}: {actividad.entrega_actividades.calificaciones.calificacion}</p></div>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            ))}
-                                        </div>
-                                    </>
-                                )}
+         {cursos ? (
+                <>
+                    <Link to="/cursos"> Volver al listado de cursos </Link>
+                    <div className='overflow-y-scroll container' style={{ height: "65vh", width: '930px' }}>
+                        {cursos.map(curso => (
+                            <div key={curso.id_curso} >
+                                <div className='d-flex align-items-center justify-content-between'>
+                                    <div className=""><h3>{curso.titulo}</h3></div>
+                                    <div className=""><JournalBookmarkFill size={20} /></div>
+                                </div>
+                                {curso.modulos.map(modulo => (
+                                    <div key={modulo.id_modulo}>
+                                        {/* {modulo.nombre_modulo} */}
+                                        {modulo.actividades.map(actividad => (
+                                        <>
+                                            <div key={actividad.id_actividad}>
+                                                <div className='d-flex align-items-center justify-content-end'>
+                                                    <div className=""><h4>{modulo.nombre_modulo}</h4></div>
+                                                </div>
+                                                {actividad.entrega_actividades && actividad.entrega_actividades.map(entrega => (
+                                                    <>
+                                                        {entrega.calificaciones && (
+                                                            <div className='d-flex align-items-center justify-content-end'>
+                                                                <div className=""><p>Nota: {actividad.nombre_actividad}: {entrega.calificaciones.calificacion}</p></div>
+                                                            </div>
+                                                        )}
+                                                    </>
+                                                ))}
+                                            </div>
+                                        </>
+                                    ))}
+                                    </div>
+                                ))}
+                                <p>Promedio del Curso: {calcularPromedioModulosPorCurso()[curso.id_curso].toFixed(2)}</p>
+                                <Link to={`/cursosDetail/${curso.id_curso}`}>Ver Curso</Link>
                             </div>
                         ))}
-                        <p>Promedio del Curso: {calcularPromedioModulosPorCurso()[curso.id_curso]}</p>
-                        <Link to={`/cursosDetail/${curso.id_curso}`}>Ver Curso</Link>
                     </div>
-                ))}
-            </div>
-            </> : <> Cargando..</> }
+                </>
+            ) : (
+                <> Cargando..</>
+            )}
     </>
   )
 }
