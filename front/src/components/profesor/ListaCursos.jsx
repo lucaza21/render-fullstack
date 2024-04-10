@@ -1,11 +1,23 @@
 import DataTable from 'react-data-table-component';
 import actividad from '../../assets/iconos/registro.png'
-import { Record } from 'react-bootstrap-icons';
-import { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import { useEffect, useState } from 'react';
 
 function ListaCursos() {
 
+    const [errorMsgModal, setErrorMsgModal] = useState("");
+    const [cursoId, setCursoId] = useState(null);
+    const [successMessage, setSuccessMessage] = useState("");
+    console.log("cursoId click:" + cursoId)
+    const [cursos, setCursos] = useState([])
+    const host = import.meta.env.VITE_BACK_END_HOST + ':' + import.meta.env.VITE_BACK_END_PORT;
+
     const columns = [
+        {
+            name: 'id',
+            selector: row => row.id_curso,
+            sortable: true
+        },
         {
             name: 'Curso',
             selector: row => row.titulo,
@@ -64,45 +76,25 @@ function ListaCursos() {
         },
         {
             name: 'Acciones',
-            selector: row => <img width={15} height={15} src={actividad} />,
-        },
-        {
-            name: 'Acciones',
-            cell: row => <button className='btn btn-primary'>Actividades</button>
-            //selector: row => <img width={15} height={15} src={eliminar}/>,
+            selector: row => <button className='btn' title="Agregar Módulo" data-bs-toggle="modal"
+                data-bs-target="#altaModulo" onClick={() => setCursoId(row.id_curso)}><img width={15} height={15} src={actividad} /></button>,
         },
     ];
 
-    const datos = [
-        {
-            titulo: 'Curso 1',
-            diseñador: 'Ana Laura',
-            objetivo: 'Realizar un proyecto ejecutivo',
-            introduccion: 'Sin descripción',
-            metodologia: 'Sin metodología',
-            perfil: 'Lic. Informática',
-            insumos: 'Sin insumos',
-            evaluacion: 'Sin evaluación',
-            horas: '20',
-            semanas: '3',
-            materialCurso: 'C:\fakepath\Anexos TFM PLATAFORMA VIRTUAL.pdf'
-        },
-        {
-            titulo: 'Curso 2',
-            diseñador: 'Ana Laura',
-            objetivo: 'Realizar un proyecto ejecutivo',
-            introduccion: 'Sin descripción',
-            metodologia: 'Sin metodología',
-            perfil: 'Lic. Informática',
-            insumos: 'Los insumos vienen en la carta descriptiva',
-            evaluacion: 'Sin evaluación',
-            horas: '20',
-            semanas: '3',
-            materialCurso: 'C:\fakepath\Anexos TFM PLATAFORMA VIRTUAL.pdf'
-        },
-    ]
-
-    const [records,setRecords]=useState(datos)
+    const loadCursos = async () => {
+        var apiUrl;
+        apiUrl = host + '/api/catcursos/listar';
+        console.log(apiUrl)
+        console.log("%c trayendo info de http://localhost:8000/api/catcursos/listar", 'color:green');
+        try {
+            //fetch("http://localhost:8000/api/catcursos/listar")
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(result => setCursos(result))
+        } catch (error) {
+            console.log(`%c${error}`, 'color:yellow')
+        }
+    };
 
     const paginacionOpciones = {
         rowsPerPageText: 'filas por página',
@@ -111,12 +103,103 @@ function ListaCursos() {
         selectAllRowsItemText: 'todos'
     }
 
-    const handleChange = (e) => {
-        const datosFiltrados = datos.filter(record => {
-            return record.name.toLowerCase().includes(e.target.value.toLowerCase())
-        })
-        setRecords(datosFiltrados)
+    useEffect(() => {
+        let interval
+        try {
+            loadCursos()
+            interval = setInterval(() => {
+                loadCursos()
+            }, 1 * 1000000)
+            return () => {
+                clearInterval(interval)
+            }
+        }
+        catch (error) {
+            console.log(`%c${error}`, 'color:yellow')
+        }
+
+    }, []);
+
+    const [datosModal, setDatosModal] = useState(
+        {
+            modulo: '',
+            objetivo_mod: '',
+            horas_mod: '',
+            inicio_mod: '',
+            termino_mod: '',
+            material_mod: '',
+        }
+    );
+
+    console.log("datosModal: " + JSON.stringify(datosModal))
+    function onChangeAnyInput() {
+        setErrorMsgModal("")
     }
+
+    const handleInputChangeModal = (event) => {
+        console.log(event.target.value);
+        setDatosModal({
+            ...datosModal,
+            [event.target.name]: event.target.value
+        });
+        onChangeAnyInput();
+    };
+    
+    //const [modulos, setModulos] = useState([]);
+
+    function readyToSubmitModal() {
+        return datosModal.modulo !== "" && datosModal.objetivo_mod !== "" && datosModal.termino_mod !== ""
+            && datosModal.inicio_mod !== "" && datosModal.horas_mod !== "" 
+    }
+
+    async function altaModulo(event, cursoId) {
+        onChangeAnyInput()
+        event.preventDefault()
+        if (!readyToSubmitModal()) {
+            setErrorMsgModal("Se deben llenar todos los campos")
+            return
+        }
+        try {
+
+            const objectModulo = {
+                nombre_modulo: datosModal.modulo,
+                objetivo_particular: datosModal.objetivo_mod,
+                horas: datosModal.horas_mod,
+                fecha_inicio: datosModal.inicio_mod,
+                fecha_fin: datosModal.termino_mod,
+                ruta_material_didactico: "a/una/ruta"
+            }
+            const host = import.meta.env.VITE_BACK_END_HOST + ':' + import.meta.env.VITE_BACK_END_PORT;
+            var apiUrl;
+            apiUrl = host + '/api/modulos/crear' + `/${cursoId}`;
+            console.log(objectModulo)
+
+            if (apiUrl.length != 0) {
+                console.log("######### " + apiUrl)
+                fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(objectModulo)
+                }).then(response => {
+                    console.log(response);
+                    //return response.json;
+                    if (response.status == 201) {
+                        console.log("modulo creado");
+                        setSuccessMessage("Módulo creado satisfactoriamente.");
+                        return response.json;
+                    } else {
+                        setErrorMsgModal("No fue posible crear el módulo.")
+                    }
+                });
+            }
+        } catch (event) {
+            console.log("################## " + event);
+            setErrorMsgModal("No existe conexión")
+        }
+        event.target.reset();
+
+    }
+
 
     return (
         <>
@@ -142,7 +225,7 @@ function ListaCursos() {
                         {/*NUEVA TABLA*/}
                         <DataTable
                             columns={columns}
-                            data={records}
+                            data={cursos}
                             pagination
                             paginationComponentOptions={paginacionOpciones}
                             fixedHeader
@@ -154,6 +237,162 @@ function ListaCursos() {
                 </div>
 
             </div>{/*FIN CONTENEDOR PRINCIPAL*/}
+
+            {/* Modal */}
+            <div
+                className="modal fade"
+                id="altaModulo"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabIndex={-1}
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                    <div className="modal-content">
+                        <form
+                            className='formulario'
+                            onSubmit={(ev) => altaModulo(ev, cursoId)}
+                        >
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="altaModulo">
+                                    Alta Módulo
+                                </h1>
+                            </div>
+                            <div className="modal-body">
+                                <div className="container-fluid" style={{ padding: "10px" }}>
+                                    <div className='row'>
+                                        <div className='col-md-12'>
+                                            <div className="form-outline mb-4">
+                                                <label className="form-label" htmlFor="nombre">
+                                                    Nombre del Módulo
+                                                </label>
+                                                <input
+                                                    name='modulo'
+                                                    id="modulo"
+                                                    className="form-control"
+                                                    onChange={handleInputChangeModal}
+                                                    placeholder='Nombre del módulo'
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-md-12'>
+                                            <div className="form-outline mb-4">
+                                                <label className="form-label" htmlFor="nombre">
+                                                    Objetivo
+                                                </label>
+                                                <input
+                                                    name='objetivo_mod'
+                                                    id="objetivo_mod"
+                                                    className="form-control"
+                                                    onChange={handleInputChangeModal}
+                                                    placeholder='Objetivo particular'
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='row'>
+                                        <div className='col-md-4'>
+                                            <div className="form-outline mb-4">
+                                                <label className="form-label" htmlFor="nombre">
+                                                    Horas
+                                                </label>
+                                                <input
+                                                    min="1" pattern="^[0-9]+"
+                                                    type="number"
+                                                    name='horas_mod'
+                                                    id="horas_mod"
+                                                    className="form-control"
+                                                    onChange={handleInputChangeModal}
+                                                    placeholder='Duración'
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className='col-md-4'>
+                                            <div className="form-outline mb-4">
+                                                <label className="form-label" htmlFor="nombre">
+                                                    Fecha de inicio
+                                                </label>
+                                                <input
+                                                    type='date'
+                                                    name='inicio_mod'
+                                                    id="inicio_mod"
+                                                    className="form-control"
+                                                    onChange={handleInputChangeModal}
+                                                    placeholder='Inicio'
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className='col-md-4'>
+                                            <div className="form-outline mb-4">
+                                                <label className="form-label" htmlFor="nombre">
+                                                    Fecha de término
+                                                </label>
+                                                <input
+                                                    type='date'
+                                                    name='termino_mod'
+                                                    id="termino_mod"
+                                                    className="form-control"
+                                                    onChange={handleInputChangeModal}
+                                                    placeholder='Término'
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* <div className='row'>
+                                        <div className='col-md-12'>
+                                            <div className="form-outline mb-4">
+                                                <label className="form-label" htmlFor="nombre">
+                                                    Material didáctico
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    className="form-control"
+                                                    aria-label="file example"
+                                                    id="material_mod"
+                                                    name="material_mod"
+                                                    required=""
+                                                    accept=".pdf,.doc,image/*"
+                                                    multiple
+                                                    onChange={handleInputChangeModal}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div> */}
+
+                                    {errorMsgModal && <div className="alert alert-danger" role="alert">
+                                        {errorMsgModal}
+                                    </div>}
+                                    {successMessage && <div className="alert alert-success" role="alert">
+                                        {successMessage}
+                                    </div>}
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <Button
+                                    variant="dark"
+                                    size="sm"
+                                    type="reset"
+                                    data-bs-dismiss="modal"
+                                >Cancelar
+                                </Button>
+                                <Button
+                                    variant="dark"
+                                    size="sm"
+                                    type="submit">
+                                    Guardar
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {/* Fin Modal */}
         </>
 
     )

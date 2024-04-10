@@ -9,10 +9,17 @@ import eliminar from '../../assets/iconos/eliminar.png'
 
 function AltaCurso() {
 
+    let user = localStorage.getItem('@user');
+    user = JSON.parse(user)
+    
+    console.log('desde Calificaciones: ' + JSON.stringify(user));
+    let profesor = user;
+
+
     const { isLoading } = useAutorizacion();
     const [errorMsg, setErrorMsg] = useState("");
     const [errorMsgModal, setErrorMsgModal] = useState("");
-
+    const [successMessage, setSuccessMessage] = useState("");
     const [datosCurso, setDatosCurso] = useState(
         {
             titulo: '',
@@ -42,8 +49,8 @@ function AltaCurso() {
     function readyToSubmit() {
         return datosCurso.titulo !== "" && datosCurso.diseñador !== "" && datosCurso.objetivo !== ""
             && datosCurso.introduccion !== "" && datosCurso.metodologia !== "" && datosCurso.perfil !== ""
-            && datosCurso.insumos !== "" && datosCurso.evaluacion !== "" && datosCurso.horas !== "" 
-            && datosCurso.semanas !== "" && datosCurso.materialCurso !== ""
+            && datosCurso.insumos !== "" && datosCurso.evaluacion !== "" && datosCurso.horas !== ""
+            && datosCurso.semanas !== ""
 
     }
 
@@ -63,108 +70,51 @@ function AltaCurso() {
         if (!readyToSubmit()) {
             setErrorMsg("Es necesario llenar todos los campos")
             return
+        }        
+        try {           
+            const object = {
+                titulo: datosCurso.titulo,
+                nombre_disenador: datosCurso.diseñador,
+                objetivo: datosCurso.objetivo,
+                introduccion: datosCurso.introduccion,
+                metodologia: datosCurso.metodologia,
+                perfil_ingreso: datosCurso.perfil,
+                insumos: datosCurso.insumos,
+                evaluacion: datosCurso.evaluacion,
+                horas: datosCurso.horas,
+                semanas: datosCurso.semanas,
+                ruta_material_didactico: "/una/ruta"
+            }
+            const host = import.meta.env.VITE_BACK_END_HOST + ':' + import.meta.env.VITE_BACK_END_PORT;
+            
+            var apiUrl;
+            apiUrl = host + import.meta.env.VITE_ENDPOINT_CATCURSO_CREAR + profesor.id;
+            console.log(object)
+
+            if (apiUrl.length != 0) {
+                console.log("######### " + apiUrl)
+                fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(object)
+                })
+                    .then(response => {
+                        console.log(response);
+                        //return response.json;
+                        if (response.status == 201) {
+                            console.log("curso creado");
+                            setSuccessMessage("Curso creado satisfactoriamente.");
+                            return response.json;                            
+                        } else {
+                            setErrorMsg("No fue posible crear el curso.")
+                        }
+                    });
+            }
+        } catch (event) {
+            console.log("################## " + e);
+            setErrorMsg("No existe conexión")
         }
-        try {
-            {/* Aquí incluir la función para insertar los datos en la base de datos
-                para obtener los datos del formulario usar datosCurso.titulo, datosCurso.diseñador, datosCurso.objetivo
-                datosCurso.introduccion,datosCurso.metodologia,datosCurso.perfil,datosCurso.insumos,datosCurso.evaluacion
-                datosCurso.semanas,datosCurso.horas,datosCurso.materialCurso
-                Para los datos del modulo se toman del siguiente arregle: */}
-
-
-        } catch (e) {
-            setErrorMsg("Insertar error")
-        }
-    }
-
-    /*INFORMACIÓN INFORMACIÓN DE LA TABLA MÓDULOS*/
-    const columns = [
-        {
-            name: 'Nombre',
-            selector: row => row.modulo,
-        },
-        {
-            name: 'Objetivo',
-            selector: row => row.objetivo_mod,
-        },
-        {
-            name: 'Horas',
-            selector: row => row.horas_mod,
-        },
-        {
-            name: 'Inicio',
-            selector: row => row.inicio_mod,
-        },
-        {
-            name: 'Término',
-            selector: row => row.termino_mod,
-        },
-        {
-            name: 'Material',
-            selector: row => row.material_mod,
-        },
-        /*{
-            name: 'Acciones',
-            selector: row => <img width={15} height={15} src={eliminar}/>,
-        },*/
-    ];
-
-    const [datosModal, setDatosModal] = useState(
-        {
-            modulo: '',
-            objetivo_mod: '',
-            horas_mod: '',
-            inicio_mod: '',
-            termino_mod: '',
-            material_mod: '',
-        }
-    );
-
-    
-
-    const handleInputChangeModal = (event) => {
-        console.log(event.target.value);
-        setDatosModal({
-            ...datosModal,
-            [event.target.name]: event.target.value
-        });
-        onChangeAnyInput();
-    };
-    const [modulos, setModulos] = useState([]);
-
-    function readyToSubmitModal() {
-        return datosModal.modulo !== "" && datosModal.objetivo_mod !== "" && datosModal.termino_mod !== ""
-            && datosModal.inicio_mod !== "" && datosModal.horas_mod !== "" && datosModal.material_mod !== ""
-    }
-
-    async function altaModulo(event) {
-        dismissError()
-        event.preventDefault()
-        if (!readyToSubmitModal()) {
-            setErrorMsgModal("Se deben llenar todos los campos")
-            return
-        }
-        const nuevoModulo = [
-            {
-                modulo: datosModal.modulo,
-                objetivo_mod: datosModal.objetivo_mod,
-                horas_mod: datosModal.horas_mod,
-                inicio_mod: datosModal.inicio_mod,
-                termino_mod: datosModal.termino_mod,
-                material_mod: datosModal.material_mod,
-            },
-        ]
-
-        setModulos(...modulos,nuevoModulo)
-        console.log("datos modulo: " + modulos);
-
-    }
-
-    const paginacionOpciones = {
-        rowsPerPageText: 'filas por página',
-        rangeSeparatorText: 'de',
-        selectAllRowsItem: true,
-        selectAllRowsItemText: 'todos'
+        event.target.reset();
     }
 
     return (
@@ -180,7 +130,7 @@ function AltaCurso() {
                 <hr className="border-1"></hr>
                 {isLoading && <Loader message={"loading"} />}
                 <form
-                    className='formulario needs-validation'
+                    className='formulario needs-validation overflow-y-scroll container text-center' style={{height: "55vh", width: '930px'}}
                     onSubmit={doAlta}
                     noValidate
                 >
@@ -369,7 +319,7 @@ function AltaCurso() {
                     </div>
 
                     {/*AGREGAR MATERIAL DIDÁCTICO*/}
-                    <div className="row bg-danger bg-opacity-80" style={{ marginBottom: "15px" }}>
+                    {/* <div className="row bg-danger bg-opacity-80" style={{ marginBottom: "15px" }}>
                         <div className="col-md-12">
                             <p style={{ margin: "0px", paddingTop: "7px", paddingBottom: "7px" }}
                                 className="fw-medium text-center">Material Didáctico</p>
@@ -393,227 +343,36 @@ function AltaCurso() {
                             </div>
                         </div>
                         <div className="col-md-1"></div>
-                    </div>
-
-
-                    {/*AGREGAR MÓDULOS */}
-                    <div className="row bg-danger bg-opacity-80" style={{ marginBottom: "15px" }}>
-                        <div className="col-md-12">
-                            <p style={{ margin: "0px", paddingTop: "7px", paddingBottom: "7px" }}
-                                className="fw-medium text-center">Agregar Módulos al Curso</p>
-                        </div>
-                    </div>
-
-                    {/*ÁREA DE MODAL PARA FORMULARIO DE ALTA MÓDULO */}
-                    {/* Button trigger modal */}
-                    <Button
-                        variant="dark"
-                        size="sm"
-                        type="submit"
-                        data-bs-toggle="modal"
-                        data-bs-target="#altaModulo"
-                    >Agregar Módulo
-                    </Button>
-
-                    {/*FIN DE ÁREA DE MODAL PARA FORMULARIO DE ALTA MÓDULO */}
-
-                    {/*TERMINA AGREGAR MÓDULOS */}
-
-                    <div className="row bg-body-tertiary">
-                        <div className='col-md-12 table-responsive'>
-
-                            {/*NUEVA TABLA*/}
-                            <DataTable
-                                columns={columns}
-                                data={modulos}
-                                pagination
-                                paginationComponentOptions={paginacionOpciones}
-                                fixedHeader
-                                fixedHeaderScrollHeight='500px'
-                                title="Listado de módulos del curso"
-                            />
-                            {/*FIN DE NUEVA TABLA*/}
-
-                        </div>
-                    </div>
-
+                    </div> */}
 
                     {errorMsg && <div className="alert alert-danger" role="alert">
                         {errorMsg}
+                    </div>}
+                    {successMessage && <div className="alert alert-success" role="alert">
+                        {successMessage}
                     </div>}
                     <hr className="border-1"></hr>
 
                     {/*SECCIÓN BOTONES*/}
                     <div className="row">
                         <div className="col-md-5"></div>
-                        <div className="col-md-2">
-                            <Button variant="dark" size="sm" type="submit">
-                                Guardar
-                            </Button>{' '}
-                            <Link to='/profesor/home'>
-                                <Button variant="dark" size="sm">
-                                    Cancelar
-                                </Button>
-                            </Link>
-                        </div>
+                            <div className="col-md-2">
+                                <Button variant="dark" size="sm" type="submit">
+                                    Guardar
+                                </Button>{' '}
+                            </div>
+                            <div className="col-md-2">
+                                <Link to='/profesor/home'>
+                                    <Button variant="dark" size="sm">
+                                        Cancelar
+                                    </Button>
+                                </Link>
+                            </div>
                         <div className="col-md-5"></div>
                     </div>
                     {/*FIN SECCIÓN BOTONES*/}
                 </form>
             </div>
-
-            {/* Modal */}
-            <div
-                className="modal fade"
-                id="altaModulo"
-                data-bs-backdrop="static"
-                data-bs-keyboard="false"
-                tabIndex={-1}
-                aria-labelledby="staticBackdropLabel"
-                aria-hidden="true"
-            >
-                <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                    <div className="modal-content">
-                        <form
-                            className='formulario'
-                            onSubmit={altaModulo}
-                        >
-                            <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="altaModulo">
-                                    Alta Módulo
-                                </h1>
-                            </div>
-                            <div className="modal-body">
-                                <div className="container-fluid" style={{ padding: "10px" }}>
-                                    <div className='row'>
-                                        <div className='col-md-12'>
-                                            <div className="form-outline mb-4">
-                                                <label className="form-label" htmlFor="nombre">
-                                                    Nombre del Módulo
-                                                </label>
-                                                <input
-                                                    name='modulo'
-                                                    id="modulo"
-                                                    className="form-control"
-                                                    onChange={handleInputChangeModal}
-                                                    placeholder='Nombre del módulo'
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-md-12'>
-                                            <div className="form-outline mb-4">
-                                                <label className="form-label" htmlFor="nombre">
-                                                    Objetivo
-                                                </label>
-                                                <input
-                                                    name='objetivo_mod'
-                                                    id="objetivo_mod"
-                                                    className="form-control"
-                                                    onChange={handleInputChangeModal}
-                                                    placeholder='Objetivo particular'
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-md-4'>
-                                            <div className="form-outline mb-4">
-                                                <label className="form-label" htmlFor="nombre">
-                                                    Horas
-                                                </label>
-                                                <input
-                                                    min="1" pattern="^[0-9]+"
-                                                    type="number"
-                                                    name='horas_mod'
-                                                    id="horas_mod"
-                                                    className="form-control"
-                                                    onChange={handleInputChangeModal}
-                                                    placeholder='Duración'
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className='col-md-4'>
-                                            <div className="form-outline mb-4">
-                                                <label className="form-label" htmlFor="nombre">
-                                                    Fecha de inicio
-                                                </label>
-                                                <input
-                                                    type='date'
-                                                    name='inicio_mod'
-                                                    id="inicio_mod"
-                                                    className="form-control"
-                                                    onChange={handleInputChangeModal}
-                                                    placeholder='Inicio'
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className='col-md-4'>
-                                            <div className="form-outline mb-4">
-                                                <label className="form-label" htmlFor="nombre">
-                                                    Fecha de término
-                                                </label>
-                                                <input
-                                                    type='date'
-                                                    name='termino_mod'
-                                                    id="termino_mod"
-                                                    className="form-control"
-                                                    onChange={handleInputChangeModal}
-                                                    placeholder='Término'
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className='row'>
-                                        <div className='col-md-12'>
-                                            <div className="form-outline mb-4">
-                                                <label className="form-label" htmlFor="nombre">
-                                                    Material didáctico
-                                                </label>
-                                                <input
-                                                    type="file"
-                                                    className="form-control"
-                                                    aria-label="file example"
-                                                    id="material_mod"
-                                                    name="material_mod"
-                                                    required=""
-                                                    accept=".pdf,.doc,image/*"
-                                                    multiple
-                                                    onChange={handleInputChangeModal}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {errorMsgModal && <div className="alert alert-danger" role="alert">
-                                        {errorMsgModal}
-                                    </div>}
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <Button
-                                    variant="dark"
-                                    size="sm"
-                                    type="reset"
-                                    data-bs-dismiss="modal"
-                                >Cancelar
-                                </Button>
-                                <Button
-                                    variant="dark"
-                                    size="sm"
-                                    type="submit">
-                                    Guardar
-                                </Button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            {/* Fin Modal */}
         </>
     )
 }

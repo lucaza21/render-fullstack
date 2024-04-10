@@ -35,7 +35,7 @@ function LayoutProfesor() {
       <div className="container-fluid" style={{height: "65vh", width: '90vw'}}>
         <div className="row">
           {/*INICIO SECCIÓN MENÚ*/}
-          <div className="col-lg-2 border-end ">
+          <div className="col-lg-3 border-end ">
             <div className={styles.menu}>
               <Navbar className="bg-body-tertiary">
                 <Container>

@@ -40,11 +40,15 @@ function ContentList({entregasPorProfesor, handleUrl} ) {
                                                                 )}
                                                                 <div className="fs-6">{entrega.comentario_entrega}</div>
                                                                 <div className="fs-6">Entregado el {new Date(entrega.fecha_entrega).toLocaleDateString()}:</div>
-                                                                <Link to={`/notas/${entrega.id_entrega}`}>
-                                                                    <div className='d-flex align-items-center justify-content-center'>
-                                                                        <button className="btn btn-primary">Calificar Entrega {entrega.id_entrega}</button>
-                                                                    </div>
-                                                                </Link>
+                                                                {entrega.calificaciones ? ( // Verificar si hay calificaciones
+                                                                    <p>Esta entrega ya ha sido calificada</p>
+                                                                ) : (
+                                                                    <Link to={`/notas/${entrega.id_entrega}`}>
+                                                                        <div className='d-flex align-items-center justify-content-center'>
+                                                                            <button className="btn btn-primary">Calificar Entrega {entrega.id_entrega}</button>
+                                                                        </div>
+                                                                    </Link>
+                                                                )}
                                                             </div>
                                                         ))}
                                                 </div>
@@ -58,6 +62,6 @@ function ContentList({entregasPorProfesor, handleUrl} ) {
                 </div>
             ))}
         </Fragment>
-  )
+    );
 }
 export default ContentList

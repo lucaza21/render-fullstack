@@ -1,8 +1,8 @@
-import './App.css';
+/* import './App.css'; */
 import { BrowserRouter as Router, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import PrivateRoute from './components/routes/PrivateRoute';
 import Login from './components/routes/Login';
-import AltaCurso from './components/routes/AltaCurso';
+
 import Footer from './components/footer';
 import Heather from './components/heather';
 import LayoutProfesor from './components/routes/LayoutProfesor';
@@ -13,7 +13,7 @@ import DetailCursos from './components/cursos/DetailCursos';
 import DetailModulos from './components/modulos/DetailModulos';
 import DetailActividades from './components/actividades/DetailActividades';
 import Navbarr from './components/Nav/Navbar';
-import Sidebar from './components/Sidebar/Sidebar';
+
 import CargarArch from './components/CargarArch/CargarArch';
 import Calificaciones from './components/Calificaciones/Calificaciones';
 import LayoutAdmin from './components/routes/LayoutAdmin';
@@ -21,26 +21,11 @@ import ContentCalificacion from './components/profesor/content/ContentCalificaci
 
 function App() {
 
-/*   localStorage.setItem('@user', JSON.stringify({
-    logedUser: {
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImV4cCI6MTcxMjQ1NzYzNi4wNCwiaWF0IjoxNzEyNDU0MDM2fQ.xp7J8j10HVRd7-4CD97AQTRSzwZhAoGS3aNWXm5r8uE",
-        alumno: {
-            id_alumno: 1,
-            usuario: "user_alumno1",
-            correo: "alumno1@platf.com"
-        }
-    }
-}))
-
-  let user = localStorage.getItem('@user');
-  user = JSON.parse(user)
- 
-  console.log('desde App con routes: ' + JSON.stringify(user)); */
-
-
   return (
     <Router>
+    
       <Heather/>
+      <div className="cont container-fluid">
       {/* <Navbarr /> */}
       <Routes>
         <Route
@@ -124,6 +109,7 @@ function App() {
         {/*fin del módulo de alumno */}
         <Route path="*" element={<Navigate to="." replace />} />
       </Routes>
+      </div>
       <Footer/>
     </Router>
   )
