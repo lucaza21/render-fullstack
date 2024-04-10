@@ -22,28 +22,31 @@ function NameCurses({ alumno }) {
 
     const calcularPromedioModulosPorCurso = () => {
         const promediosPorCurso = {};
-    
-        cursos.forEach(curso => {
-            let totalCalificaciones = 0;
-            let numActividadesCalificadas = 0;
-    
-            curso.modulos.forEach(modulo => {
-                modulo.actividades.forEach(actividad => {
-                    actividad.entrega_actividades.forEach(entrega => {
-                        if (entrega.calificaciones && entrega.calificaciones.calificacion !== null) {
-                            totalCalificaciones += entrega.calificaciones.calificacion;
-                            numActividadesCalificadas++;
-                        }
-                    });
-                });
+
+    cursos.forEach(curso => {
+        let totalCalificaciones = 0;
+        let numActividadesCalificadas = 0;
+
+        curso.modulos.forEach(modulo => {
+            modulo.actividades.forEach(actividad => {
+                // Obtener la última entrega con calificación de la actividad
+                const ultimaEntregaConCalificacion = actividad.entrega_actividades
+                    .filter(entrega => entrega.calificaciones && entrega.calificaciones.calificacion !== null)
+                    .pop();
+
+                if (ultimaEntregaConCalificacion) {
+                    totalCalificaciones += ultimaEntregaConCalificacion.calificaciones.calificacion;
+                    numActividadesCalificadas++;
+                }
             });
-    
-            const promedioCurso = numActividadesCalificadas !== 0 ? totalCalificaciones / numActividadesCalificadas : 0;
-            promediosPorCurso[curso.id_curso] = promedioCurso;
         });
-    
-        return promediosPorCurso;
-    };
+
+        const promedioCurso = numActividadesCalificadas !== 0 ? totalCalificaciones / numActividadesCalificadas : 0;
+        promediosPorCurso[curso.id_curso] = promedioCurso;
+    });
+
+    return promediosPorCurso;
+};
 
   return (
     <>
@@ -57,9 +60,8 @@ function NameCurses({ alumno }) {
                                     <div className=""><h3>{curso.titulo}</h3></div>
                                     <div className=""><JournalBookmarkFill size={20} /></div>
                                 </div>
-                                {curso.modulos.map(modulo => (
+                                {/* {curso.modulos.map(modulo => (
                                     <div key={modulo.id_modulo}>
-                                        {/* {modulo.nombre_modulo} */}
                                         {modulo.actividades.map(actividad => (
                                         <>
                                             <div key={actividad.id_actividad}>
@@ -78,6 +80,35 @@ function NameCurses({ alumno }) {
                                             </div>
                                         </>
                                     ))}
+                                    </div>
+                                ))} */}
+                                {curso.modulos.map(modulo => (
+                                    <div key={modulo.id_modulo}>
+                                        <div className='d-flex align-items-center justify-content-end'>
+                                            <div className=""><h4>{modulo.nombre_modulo}</h4></div>
+                                        </div>
+                                        {modulo.actividades.map(actividad => (
+                                            <div key={actividad.id_actividad}>
+                                                <div className='d-flex align-items-center justify-content-end'>
+                                                    <h5>{actividad.nombre_actividad}</h5>
+                                                </div>
+                                                {actividad.entrega_actividades && actividad.entrega_actividades.length > 0 && (
+                                                    <div>
+                                                        {/* Filtrar las entregas para mostrar solo la última calificada */}
+                                                        {actividad.entrega_actividades
+                                                            .filter(entrega => entrega.calificaciones && entrega.calificaciones.calificacion !== null)
+                                                            .slice(-1) // Obtener la última entrega
+                                                            .map(entrega => (
+                                                                <div key={entrega.id_entrega}>
+                                                                    <div className='d-flex align-items-center justify-content-end'>
+                                                                        <div className=""><p>Nota: {actividad.nombre_actividad}: {entrega.calificaciones.calificacion}</p></div>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        ))}
                                     </div>
                                 ))}
                                 <p>Promedio del Curso: {calcularPromedioModulosPorCurso()[curso.id_curso].toFixed(2)}</p>

@@ -7,10 +7,16 @@ import SplitContent from './content/SplitContent';
 function CalificarActividades() {
     const [entregasPorProfesor, setEntregasPorProfesor] = useState(null);
 
+    let user = localStorage.getItem('@user');
+    user = JSON.parse(user)
+   
+    console.log('desde Calificaciones: ' + JSON.stringify(user));
+    let profesor = user;
+
     useEffect(() => {
         const fetchEntregasPorProfesor = async () => {
           try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profesors/calificaciones/1`);
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profesors/calificaciones/${profesor.id}`);
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }

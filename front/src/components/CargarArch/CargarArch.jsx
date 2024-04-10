@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
-import { useParams, Link, useLocation } from "react-router-dom"
+import { useParams, Link, useLocation, useNavigate } from "react-router-dom"
 
 function CargarArch( props ) {
 
@@ -18,6 +18,8 @@ function CargarArch( props ) {
     console.log(state)
 
     const { id_curso } = state
+
+    const navigate = useNavigate();
 
     //console.log("upload: " , upload)
     //console.log("uploadClick: " , uploadClick)
@@ -68,6 +70,7 @@ function CargarArch( props ) {
               icon: "success"
             });
             //console.log(res)
+            navigate(`/cursosDetail/${id_curso}`)
           } else {
             Swal.fire({
               title: "Hummmm Nop",
