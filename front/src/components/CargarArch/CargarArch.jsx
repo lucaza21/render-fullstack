@@ -91,32 +91,34 @@ function CargarArch( props ) {
     console.log("render CargarArch")
   return (
     <>
-    <Link to={`/cursosDetail/${id_curso}`}>Volver al curso</Link>
-    <div id="content" className="py-6">  
-        <input id="fileinput" className='form-control w-2/3' 
-            type="file" onChange={selectedHandler}/>
-        <input id="input" className='form-control w-2/3 mt-2' placeholder="Deja tu comentario" 
-            type="comment" onChange={(ev) => setComment(ev.target.value)}/>    
-        <button 
-            className='my-2 bg-success text-white font-bold py-2 mx-2 px-4 rounded' 
-            type='button' onClick={() => sendHandler()}>
-            Upload
-        </button>
-    </div>
+    <div className="container text-center d-flex flex-column justify-content-center align-items-center gap-3" style={{height: "65vh", width: '930px'}}>
+      <Link to={`/cursosDetail/${id_curso}`}>Volver al curso</Link>
+      <div id="content " className="py-6">  
+          <input id="fileinput" className='form-control w-2/3' 
+              type="file" onChange={selectedHandler}/>
+          <input id="input" className='form-control w-2/3 mt-2' placeholder="Deja tu comentario" 
+              type="comment" onChange={(ev) => setComment(ev.target.value)}/>    
+          <button 
+              className='my-2 bg-success text-white font-bold py-2 mx-2 px-4 rounded' 
+              type='button' onClick={() => sendHandler()}>
+              Upload
+          </button>
+      </div>
     
-    <div>
-    {upload !== null ? <>
-            {uploadClick == true && (
-              <>
-              <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
+      <div>
+      {upload !== null ? <>
+              {uploadClick == true && (
+                <>
+                <div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+                </>
+              )}
               </>
-            )}
-            </>
-            : <> </>
-    }
-    </div>
+              : <> </>
+      }
+      </div>
+      </div>
    </>
   )
 }

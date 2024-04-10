@@ -25,7 +25,7 @@ function Login() {
         try {
             await login(username, password, perfil)
             if (perfil === "alumno"){
-                navigate("/alumno")
+                navigate("/cursos")
             } else if(perfil === "profesor"){
                 navigate("/profesor")
             } else if(perfil === "admin"){

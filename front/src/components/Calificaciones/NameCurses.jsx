@@ -53,7 +53,7 @@ function NameCurses({ alumno }) {
          {cursos ? (
                 <>
                     <Link to="/cursos"> Volver al listado de cursos </Link>
-                    <div className='overflow-y-scroll container' style={{ height: "65vh", width: '930px' }}>
+                    <div >
                         {cursos.map(curso => (
                             <div key={curso.id_curso} >
                                 <div className='d-flex align-items-center justify-content-between'>

@@ -5,7 +5,7 @@ function LayoutAlumno(){
     return(
         <section>
             <div>
-            <div class="position-static">...</div>
+            <div class="">...</div>
             LAYOUT ALUMNO
             </div>
         </section>

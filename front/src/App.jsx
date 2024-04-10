@@ -1,4 +1,4 @@
-/* import './App.css'; */
+import './App.css';
 import { BrowserRouter as Router, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import PrivateRoute from './components/routes/PrivateRoute';
 import Login from './components/routes/Login';
@@ -25,7 +25,7 @@ function App() {
     <Router>
     
       <Heather/>
-      <div className="cont container-fluid">
+      <div className="">
       {/* <Navbarr /> */}
       <Routes>
         <Route
@@ -42,7 +42,7 @@ function App() {
         <Route
           path="/profesor/*"
           element={
-            <PrivateRoute>
+            <PrivateRoute >
               <LayoutProfesor/>
             </PrivateRoute>
           }
@@ -51,7 +51,7 @@ function App() {
         <Route
           path="alumno"
           element={
-            <PrivateRoute>
+            <PrivateRoute >
               <Navbarr/>
             </PrivateRoute>
           }
@@ -60,7 +60,7 @@ function App() {
           path="/cursos"
           element={
             <PrivateRoute>
-              <Navbarr/>
+              <Navbarr />
               <GetCursos/>
             </PrivateRoute>
           }
@@ -69,6 +69,7 @@ function App() {
           path="/cursosDetail/:id_curso"
           element={
             <PrivateRoute>
+              <Navbarr />
               <DetailCursos/>
             </PrivateRoute>
           }
@@ -77,6 +78,7 @@ function App() {
           path="/modulosDetail/:id_modulo"
           element={
             <PrivateRoute>
+              <Navbarr/>
               <DetailModulos/>
             </PrivateRoute>
           }
@@ -85,6 +87,7 @@ function App() {
           path="/actividadesDetail/:id_actividad"
           element={
             <PrivateRoute>
+              <Navbarr/>
               <DetailActividades/>
             </PrivateRoute>
           }
@@ -93,6 +96,7 @@ function App() {
           path="/cargar/:id_actividad"
           element={
             <PrivateRoute>
+              <Navbarr/>
               <CargarArch />
             </PrivateRoute>
           }
@@ -101,6 +105,7 @@ function App() {
           path="/calificaciones"
           element={
             <PrivateRoute>
+              <Navbarr/>
               <Calificaciones />
             </PrivateRoute>
           }

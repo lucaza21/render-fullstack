@@ -20,53 +20,53 @@ function Navbarr() {
 
   return (
     <>
-   <Nav variant="pills" defaultActiveKey="/home" className='d-flex align-items-center justify-content-around'>
+        <Nav variant="pills" defaultActiveKey="/home" className='d-flex align-items-center justify-content-around my-3'>
+            {
+                (user != null) ? 
+                (<>
+                    <Nav.Item>
+                        <Nav.Link as={NavLink} to="/">Home</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link as={NavLink} to="/cursos">Cursos</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link as={NavLink} to="/calificaciones">Calificaciones</Nav.Link>
+                    </Nav.Item>
+                    
+                    {
+                        (user) && (user.role=='admin') && (
+                            <>
+                            <Nav.Item>
+                                {/* <Nav.Link as={NavLink} to="/addcoaster">Add Coaster</Nav.Link> */}
+                            </Nav.Item>
+                            </>
+                        )
+                    }
+                </>) : (<>
+                    
+                    <Nav.Item>
+                        <Nav.Link as={NavLink} to="/">Home</Nav.Link>
+                    </Nav.Item>
+                    
+                </>)
+            }
+            
+        
         {
-            (user != null) ? 
-            (<>
-                <Nav.Item>
-                    <Nav.Link as={NavLink} to="/">Home</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link as={NavLink} to="/cursos">Cursos</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link as={NavLink} to="/calificaciones">Calificaciones</Nav.Link>
-                </Nav.Item>
-                
-                {
-                    (user) && (user.role=='admin') && (
-                        <>
-                        <Nav.Item>
-                            {/* <Nav.Link as={NavLink} to="/addcoaster">Add Coaster</Nav.Link> */}
-                        </Nav.Item>
-                        </>
-                    )
-                }
-            </>) : (<>
-                
-                <Nav.Item>
-                    <Nav.Link as={NavLink} to="/">Home</Nav.Link>
-                </Nav.Item>
-                
-            </>)
+            (user != null) ? (
+                <>
+                    <Nav.Item>
+                        <Nav.Link >Hola {user.usuario}</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link  onClick={() => logOut()}>Logout</Nav.Link>
+                    </Nav.Item>
+                    </>
+                    ) : ( < > </>)
         }
         
-      
-      {
-        (user != null) ? (
-            <>
-                <Nav.Item>
-                    <Nav.Link >Hola {user.usuario}</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link  onClick={() => logOut()}>Logout</Nav.Link>
-                </Nav.Item>
-                </>
-                ) : ( < > </>)
-      }
-      
-    </Nav>
+        </Nav>
     </>
   )
 
