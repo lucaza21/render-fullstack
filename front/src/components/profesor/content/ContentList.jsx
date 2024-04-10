@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react'
-import { Journals, FilePlay, FolderFill, JournalBookmarkFill } from 'react-bootstrap-icons'
+import { Journals, FilePlay, FolderFill, JournalBookmarkFill, FileArrowUp } from 'react-bootstrap-icons'
+import ContentCalificacion from './ContentCalificacion'
+import { Link } from 'react-router-dom'
 
 function ContentList({entregasPorProfesor, handleUrl} ) {
   return (
@@ -42,6 +44,11 @@ function ContentList({entregasPorProfesor, handleUrl} ) {
                                                                     )}
                                                                     <div className="fs-6">{entrega.comentario_entrega}</div>
                                                                     <div className="fs-6">Entregado el {new Date(entrega.fecha_entrega).toLocaleDateString()}:</div>
+                                                                    <Link to={`/notas/${entrega.id_entrega}`}>
+                                                                        <div className='d-flex align-items-center justify-content-center'>
+                                                                            <button className="btn btn-primary">Calificar Actividad {entrega.id_entrega}</button>
+                                                                        </div>
+                                                                    </Link>
                                                                 </div>
                                                             ))}
                                                         </div>

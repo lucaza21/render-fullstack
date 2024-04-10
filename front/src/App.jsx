@@ -17,6 +17,7 @@ import Sidebar from './components/Sidebar/Sidebar';
 import CargarArch from './components/CargarArch/CargarArch';
 import Calificaciones from './components/Calificaciones/Calificaciones';
 import LayoutAdmin from './components/routes/LayoutAdmin';
+import ContentCalificacion from './components/profesor/content/ContentCalificacion';
 
 function App() {
 
@@ -51,7 +52,8 @@ function App() {
             }
         />
         <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />  
+        <Route path="/login" element={<Login />} />
+        <Route path="/notas/:id_entrega" element={<ContentCalificacion />} /> 
         <Route
           path="/profesor/*"
           element={

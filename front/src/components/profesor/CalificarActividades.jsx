@@ -10,7 +10,7 @@ function CalificarActividades() {
     useEffect(() => {
         const fetchEntregasPorProfesor = async () => {
           try {
-            const response = await fetch(`http://localhost:8000/api/profesors/calificaciones/1`);
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profesors/calificaciones/1`);
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }

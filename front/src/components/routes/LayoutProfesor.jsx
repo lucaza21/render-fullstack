@@ -17,6 +17,7 @@ import Home from '../profesor/HomeProfesor';
 import Calendario from '../Calendario';
 import ListaCursos from '../profesor/ListaCursos';
 import CalificarActividades from '../profesor/CalificarActividades';
+import ContentCalificacion from '../profesor/content/ContentCalificacion';
 
 function LayoutProfesor() {
   const { logout, loadUser } = useAutorizacion();
@@ -182,6 +183,14 @@ function LayoutProfesor() {
                   element={
                     <PrivateRoute>
                       <CalificarActividades />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="notas/:id_entrega"
+                  element={
+                    <PrivateRoute>
+                      <ContentCalificacion />
                     </PrivateRoute>
                   }
                 />
