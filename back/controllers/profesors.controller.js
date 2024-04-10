@@ -5,6 +5,7 @@ const Profesor = require("../models/profesor.model");
 const Modulo = require("../models/modulo.model");
 const Entrega = require("../models/entregas.model");
 const Actividad = require("../models/actividades.model");
+const Calificacion = require("../models/calificaciones.model");
 const Alumno = require("../models/alumno.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
@@ -295,8 +296,12 @@ module.exports.calificaciones = (req, res, next) => {
                 as:'actividades',
                 include: [{
                     model: Entrega,
-                    as:'entrega_actividades'
-                }]
+                    as:'entrega_actividades',
+                    include: [{
+                        model: Calificacion,
+                        as:'calificaciones'
+                        }]
+                    }]
                 }]
             }]
             }]
