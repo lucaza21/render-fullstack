@@ -8,6 +8,7 @@ import {
   setAuthToken
 } from "../utils/Autorizacion"
 import { Spinner } from "react-bootstrap"
+import { Navigate } from "react-router-dom"
 
 const AutorizacionContext = createContext({
   user: undefined,
@@ -101,7 +102,7 @@ export function AuthProvider({ children }) {
             console.log(result.status)
             //onLoginComplete(true);
             //setLogError(true)
-            navigate("/login")
+            Navigate("/login")
         }
 
         else {
