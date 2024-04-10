@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom"
 import { Journals, FilePlay, FolderFill } from 'react-bootstrap-icons'
 import Player from '../Player/Player'
 import ModuleList from './ModuleList'
+import { Col, Container, Row } from 'react-bootstrap'
 
 function Sidebar({ cursoDetail, id_curso }) {
 
@@ -17,22 +18,24 @@ function Sidebar({ cursoDetail, id_curso }) {
 
   return (
     <>
-    <div className='container-fluid' >
-        <div className='row'>
-            <div className="col">
+    <Container>
+        <Row className="justify-content-center">
+            <Col>
+            <div style={{height: "65vh"}}>
                 {archUrl.includes("pdf") ? 
-                <div className='container my-2'>
-                    <iframe src={archUrl} width="640px" height="360px" />
-                </div> : <>
+                    <iframe src={archUrl} width="500px" height="360px" />
+                 : <>
                     <Player url={archUrl} />
                 </>}
-            </div>
-            <div className="col overflow-y-scroll" style={{height: "65vh"}}>
-                <ModuleList cursoDetail={cursoDetail} handleUrl={handleUrl} id_curso={id_curso}/>
-            </div>
-            {/* {JSON.stringify(cursoDetail)} */}
-        </div>   
-    </div>
+                </div>
+            </Col>
+            <Col>
+                <div className="overflow-y-scroll" style={{height: "65vh"}}>
+                    <ModuleList cursoDetail={cursoDetail} handleUrl={handleUrl} id_curso={id_curso}/>
+                </div>
+            </Col>
+        </Row>
+      </Container>
     </>
   )
 }

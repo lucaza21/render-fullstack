@@ -92,7 +92,7 @@ function CargarArch( props ) {
   return (
     <>
     <div className="container text-center d-flex flex-column justify-content-center align-items-center gap-3" style={{height: "65vh", width: '930px'}}>
-      <Link to={`/cursosDetail/${id_curso}`}>Volver al curso</Link>
+      <Link to={`/cursosDetail/${id_curso}`} className="btn btn-primary mb-3">Volver al curso</Link>
       <div id="content " className="py-6">  
           <input id="fileinput" className='form-control w-2/3' 
               type="file" onChange={selectedHandler}/>

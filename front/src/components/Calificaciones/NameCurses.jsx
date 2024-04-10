@@ -53,7 +53,7 @@ function NameCurses({ alumno }) {
     <div>
     {cursos ? (
         <>
-            <Link to="/cursos" className="btn btn-primary mb-3">Volver al listado de cursos</Link>
+            {/* <Link to="/cursos" className="btn btn-primary mb-3">Volver al listado de cursos</Link> */}
             <Accordion>
                 {cursos.map(curso => (
                     <Card key={curso.id_curso}>

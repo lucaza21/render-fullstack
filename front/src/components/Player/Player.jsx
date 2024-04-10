@@ -1,17 +1,15 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import ReactPlayer from 'react-player'
 
 function Player({url}) {
   return (
-    <>
-    <div className='container my-2'>
-
-    <ReactPlayer url={url}
-        controls 
-
-        />
-    </div>
-    </>
+    <Fragment>
+      <ReactPlayer url={url}
+          controls
+          width={500}
+          height={360}
+      />
+    </Fragment>
   )
 }
 

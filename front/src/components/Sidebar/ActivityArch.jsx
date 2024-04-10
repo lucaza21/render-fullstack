@@ -8,9 +8,9 @@ function ActivityArch({ actividad, handleUrl }) {
     console.log(JSON.stringify(archivo))
     return (
         <>
-            <Fragment key={archivo.fName}>
+            <Fragment key={archivo.fName} >
                 {/* {JSON.stringify(archivo)} */}
-                <div className='d-flex align-items-center justify-content-between'>
+                <div className='d-flex align-items-center justify-content-between '>
                     <div className=""><FileArrowDown   size={20} /></div>
                     <div className=""><button onClick={() => handleUrl(archivo.url)}>{archivo.fName}</button></div>
                 </div>
