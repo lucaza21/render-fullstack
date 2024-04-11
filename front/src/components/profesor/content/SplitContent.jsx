@@ -20,8 +20,8 @@ function SplitContent({ entregasPorProfesor }) {
     <div>
 
         <Container>
-            <Row className="">
-                <Col>
+            <Row className="justify-content-center">
+                <Col lg={6}>
                     <div style={{height: "65vh"}}>
                         {archUrl.includes("pdf") ? 
                         <div className='container'>
@@ -31,7 +31,7 @@ function SplitContent({ entregasPorProfesor }) {
                         </>}
                     </div>
                 </Col>
-                <Col  md={5}>
+                <Col lg={6}>
                     <div className="overflow-y-scroll" style={{ height: "65vh"}}>
                         <ContentList entregasPorProfesor={entregasPorProfesor} handleUrl={handleUrl}/>
                     </div>

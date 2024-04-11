@@ -232,11 +232,11 @@ module.exports.crear_modulo = (req, res, next) => {
             //console.log(response.dataValues)
             return deleteImage(response.ruta_material_didactico[0].public_id)
         }).then(responseDelete => {
-            console.log(responseDelete)
+            //console.log(responseDelete)
             if(responseDelete.result !== "ok"){
                 throw new Error("No se pudo crear el modulo en cloudinary")
             }
-            return res.status(201).json( {message:' Se ha creado el modulo', modulo: modulo_creado })
+            return res.status(201).json( {message:'Se ha creado el modulo', modulo: modulo_creado })
         }).catch((error) =>{
             return res.status(400).json({ message: `Error creando modulo: - ${error.name}: ${error.message}`});
         })
@@ -278,9 +278,9 @@ module.exports.subirArchivos = (req, res, next) => {
                 url: data[0]?.url,
                 folder: data[0]?.folder,
                 public_id: data[0]?.public_id,
-                archivos: [...data[0]?.archivos, {fName:oName, url:uploadResponse.url}]
+                archivos: [...data[0]?.archivos, {fName:oName, url:uploadResponse.secure_url}]
             }]
-
+            console.log(newArchivo)
             fs.unlink(req.file.path)
             return Modulo.update({ ruta_material_didactico : newArchivo},{
                 where: {id_modulo: id_modulo},
