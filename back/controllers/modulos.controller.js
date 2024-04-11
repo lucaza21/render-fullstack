@@ -51,51 +51,6 @@ module.exports.listar_modulo = (req, res, next) => {
      
 };
 
-
-
-module.exports.detalle_curso_modulo = (req, res, next) => {
-    //console.log(req.body)
-    const id_curso = req.params.id
-    Modulo.findAll(
-        { 
-            where: {id_curso: id_curso},
-            //attributes:['id_modulo','id_curso','nombre_modulo',], 
-            //raw:true
-            include: [
-                {
-                    model: Actividad,
-                    as:'actividades', 
-                    attributes: ["id_actividad","nombre_actividad", "ruta_actividad"] 
-                },
-                {
-                model: catCursos,
-                as:'cat_cursos',
-                required:true,
-                include:[
-                    {
-                        model:CursoAlumno,
-                        as:'curso_alumno'
-                    },
-                    {
-                        model:Alumno,
-                        as: 'alumno'
-                    }
-                ]   
-            }],  
-            }
-        ).then(curso => {
-            if(curso === null){
-                throw new Error("El curso mencionado no existe")
-            }
-            
-            return res.status(200).json(curso)
-        }).catch((error) => {
-            return res.status(400).json({message: `Error listando cursos - ${error.name}: ${error.message}`});
-        });
-     
-};
-
-
 module.exports.detalle_modulo = (req, res, next) => {
     //console.log(req.body)
     const id_modulo = req.params.id

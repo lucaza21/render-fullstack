@@ -11,7 +11,7 @@ cloudinary.config({
 
 //upload
 const uploadFolder = async (folderName, fName) => {
-    return await cloudinary.uploader.upload('uploads/cd1fd1dec3de7d429ac794bedddd1f2f', 
+    return await cloudinary.uploader.upload('uploads\\cd1fd1dec3de7d429ac794bedddd1f2f', 
         {
             folder: folderName,
             public_id : fName  

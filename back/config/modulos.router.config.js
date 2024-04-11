@@ -14,7 +14,7 @@ router.get("/bulk", modulos.bulk_modulo);
 router.post("/subir/:id", upload.single('file'), modulos.subirArchivos);
 router.put("/editar/:id", modulos.editar_modulo);
 router.delete("/eliminar/:id", modulos.eliminar_modulo);
-router.get("/detallebycurso/:id", modulos.detalle_curso_modulo);
+
 
 
 

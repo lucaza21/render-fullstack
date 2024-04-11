@@ -1,19 +1,20 @@
 const DataTypes = require("sequelize");
 
 const sequelize = new DataTypes(
-  'plataforma_virtual',
-  'root',
-  'root123456',
-  {
-  host: 'localhost',
-  dialect: 'mysql',
-  define: {
-      timestamps: false,
-      freezeTableName: true
-    },
+  process.env.DDBB_NAME,
+  process.env.DDBB_USER,
+  process.env.DDBB_PASSWORD,
+{
+host: process.env.DDBB_HOST,
+dialect: 'mysql',
+define: {
+    timestamps: false,
+    freezeTableName: true
   },
-  );
-  
+},
+
+);
+
 sequelize.authenticate().then(() => {
     console.log(`SQL Connection ${process.env.DDBB_NAME} has been established successfully.`);
     }).catch((error) => {
