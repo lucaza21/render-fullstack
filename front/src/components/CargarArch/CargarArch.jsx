@@ -52,7 +52,7 @@ function CargarArch( props ) {
         formData.append('file', file)
         formData.append('comment', comment)
 
-        fetch(`http://localhost:8000/api/entregas/crear/${id_actividad}/${alumno.id}`, {
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/api/entregas/crear/${id_actividad}/${alumno.id}`, {
             method: 'POST',
             body: formData
         })
