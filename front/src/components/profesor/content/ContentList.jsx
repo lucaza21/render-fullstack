@@ -90,7 +90,7 @@ function ContentList({entregasPorProfesor, handleUrl} ) {
                                               <Link to={`/notas/${entrega.id_entrega}`}>
                                                 <div className="d-flex align-items-center justify-content-center">
                                                   <button className="btn btn-primary">
-                                                    Calificar Entrega {entrega.id_entrega}
+                                                    Calificar Entrega
                                                   </button>
                                                 </div>
 
