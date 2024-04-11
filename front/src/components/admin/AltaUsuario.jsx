@@ -89,10 +89,10 @@ function AltaUsuario() {
             var urlAltaUsr;
             //perfil 1 == alumno
             if(datos.perfil == 1){
-                urlAltaUsr = `${import.meta.env.VITE_BACKEND_URL}/api/api/alumnos/crear`;
+                urlAltaUsr = `${import.meta.env.VITE_BACKEND_URL}/api/alumnos/crear`;
                 
             }else if (datos.perfil == 2){ //perfil 2 == profesor
-                urlAltaUsr = `${import.meta.env.VITE_BACKEND_URL}/api/api/profesors/crear`;
+                urlAltaUsr = `${import.meta.env.VITE_BACKEND_URL}/api/profesors/crear`;
                 
             }else if(datos.perfil === 3) {// perfil 3 == admin
 
