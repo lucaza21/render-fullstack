@@ -187,11 +187,11 @@ module.exports.crear_modulo = (req, res, next) => {
             //console.log(response.dataValues)
             return deleteImage(response.ruta_material_didactico[0].public_id)
         }).then(responseDelete => {
-            console.log(responseDelete)
+            //console.log(responseDelete)
             if(responseDelete.result !== "ok"){
                 throw new Error("No se pudo crear el modulo en cloudinary")
             }
-            return res.status(201).json( {message:' Se ha creado el modulo', modulo: modulo_creado })
+            return res.status(201).json( {message:'Se ha creado el modulo', modulo: modulo_creado })
         }).catch((error) =>{
             return res.status(400).json({ message: `Error creando modulo: - ${error.name}: ${error.message}`});
         })
