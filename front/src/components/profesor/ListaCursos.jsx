@@ -1,13 +1,17 @@
 import DataTable from 'react-data-table-component';
-import actividad from '../../assets/iconos/registro.png'
+import registro from '../../assets/iconos/registro.png'
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'react';
+//import iconMaterial from '../../assets/iconos/archivo.png'
 
 function ListaCursos() {
 
     const [errorMsgModal, setErrorMsgModal] = useState("");
+    const [errorMsgModalMaterial, setErrorMsgModalMaterial] = useState("");
     const [cursoId, setCursoId] = useState(null);
+    const [file, setFile] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
+    const [successMessageMaterial, setSuccessMessageMaterial] = useState("");
     console.log("cursoId click:" + cursoId)
     const [cursos, setCursos] = useState([])
     const host = import.meta.env.VITE_BACK_END_HOST + ':' + import.meta.env.VITE_BACK_END_PORT;
@@ -75,9 +79,16 @@ function ListaCursos() {
             sortable: true
         },
         {
-            name: 'Acciones',
-            selector: row => <button className='btn' title="Agregar Módulo" data-bs-toggle="modal"
-                data-bs-target="#altaModulo" onClick={() => setCursoId(row.id_curso)}><img width={15} height={15} src={actividad} /></button>,
+            name: 'Módulo',
+            selector: row => 
+            <button className='btn' title="Agregar Módulo" data-bs-toggle="modal"
+                data-bs-target="#altaModulo" onClick={() => setCursoId(row.id_curso)}><img width={15} height={15} src={registro} /></button>,
+        },
+        {
+            name: 'Material',
+            selector: row => 
+            <button className='btn' title="Agregar Material" data-bs-toggle="modal"
+                data-bs-target="#altaMaterial" onClick={() => setCursoId(row.id_curso)}><img width={15} height={15} src={registro} /></button>,  
         },
     ];
 
@@ -102,6 +113,13 @@ function ListaCursos() {
         selectAllRowsItem: true,
         selectAllRowsItemText: 'todos'
     }
+
+    //ExpandedComponent   
+
+     //const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
+     const ExpandedComponent = ({ data }) => <pre><ListarModulosCurso/></pre>; 
+    
+    //ExpandedComponent
 
     useEffect(() => {
         let interval
@@ -134,6 +152,7 @@ function ListaCursos() {
     console.log("datosModal: " + JSON.stringify(datosModal))
     function onChangeAnyInput() {
         setErrorMsgModal("")
+        setErrorMsgModalMaterial("");
     }
 
     const handleInputChangeModal = (event) => {
@@ -144,6 +163,13 @@ function ListaCursos() {
         });
         onChangeAnyInput();
     };
+
+    const handleInputChangeMaterial = (e) => {
+        console.log(e.target.files[0])
+        setFile(e.target.files[0])
+        onChangeAnyInput();
+    };
+    console.log("archivo", file)
     
     //const [modulos, setModulos] = useState([]);
 
@@ -198,6 +224,52 @@ function ListaCursos() {
         }
         event.target.reset();
 
+    }
+
+    function readyToSubmitModalMaterial() {
+        return file !== null
+    }
+
+    async function altaMaterial(event, cursoId) {
+        onChangeAnyInput()
+        event.preventDefault()
+        if (!readyToSubmitModalMaterial()) {
+            setErrorMsgModalMaterial("Debe seleccionar un archivo")
+            return
+        }
+        try {
+            const host = import.meta.env.VITE_BACK_END_HOST + ':' + import.meta.env.VITE_BACK_END_PORT;
+            var apiUrl;
+            apiUrl = host + '/api/modulos/subir' + `/${cursoId}`;
+              console.log("api: "+apiUrl)
+            if (apiUrl.length != 0) {
+                console.log("######### " + apiUrl)
+
+                const formData = new FormData()
+                formData.append('file', file)
+
+                fetch(apiUrl, {
+                    method: 'POST',
+                    //headers: { "Content-Type": "application/json" },
+                    body: formData
+                }).then(response => {
+                    console.log(response);
+                    //return response.json;
+                    if (response.status == 200) {
+                        console.log("material creado");
+                        setSuccessMessageMaterial("El archivo se cargo correctamente.");
+                        return response.json;
+                    } else {
+                        setErrorMsgModalMaterial("No fue posible cargar el archivo.")
+                    }
+                });
+            }
+        } catch (event) {
+            console.log("################## " + event);
+            setErrorMsgModalMaterial("No existe conexión")
+        }
+        event.target.reset();
+        setFile(null)
     }
 
 
@@ -394,6 +466,76 @@ function ListaCursos() {
                 </div>
             </div>
             {/* Fin Modal */}
+
+            {/* Modal Material*/}
+            <div
+                className="modal fade"
+                id="altaMaterial"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabIndex={-1}
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                    <div className="modal-content">
+                        <form
+                            className='formulario'
+                            onSubmit={(ev) => altaMaterial(ev, cursoId)}
+                        >
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="altaMaterial">
+                                    Cargar Mateial Didáctico al Curso
+                                </h1>
+                            </div>
+                            <div className="modal-body">
+                                <div className="container-fluid" style={{ padding: "10px" }}>
+                                    
+                                     <div className='row'>
+                                        <div className='col-md-12'>
+                                            <div className="form-outline mb-4">
+                                                <label className="form-label" htmlFor="nombre">
+                                                    Material didáctico
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    className="form-control"
+                                                    aria-label="file example"
+                                                    id="fileinput"
+                                                    onChange={handleInputChangeMaterial}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div> 
+
+                                    {errorMsgModalMaterial && <div className="alert alert-danger" role="alert">
+                                        {errorMsgModalMaterial}
+                                    </div>}
+                                    {successMessageMaterial && <div className="alert alert-success" role="alert">
+                                        {successMessageMaterial}
+                                    </div>}
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <Button
+                                    variant="dark"
+                                    size="sm"
+                                    type="reset"
+                                    data-bs-dismiss="modal"
+                                >Cancelar
+                                </Button>
+                                <Button
+                                    variant="dark"
+                                    size="sm"
+                                    type="submit">
+                                    Subir Archivo
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                                </div>
+            {/* Fin Modal Material*/}
         </>
 
     )

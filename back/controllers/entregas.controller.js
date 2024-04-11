@@ -84,7 +84,7 @@ module.exports.crear_entrega = (req, res, next) => {
                 url: data[0]?.url,
                 folder: data[0]?.folder,
                 public_id: data[0]?.public_id,
-                archivos: [...data[0]?.archivos, {fName:oName, url:uploadResponse.url, pId:uploadResponse.public_id}]
+                archivos: [...data[0]?.archivos, {fName:oName, url:uploadResponse.secure_url, pId:uploadResponse.public_id}]
             }]
             fs.unlink(req.file.path)
             return Actividad.update({ ruta_actividad : newArchivo},{
