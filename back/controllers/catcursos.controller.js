@@ -54,6 +54,7 @@ module.exports.listar_catCursos = (req, res, next) => {
 module.exports.detalle_catCursos = (req, res, next) => {
     //console.log(req.body)
     const id_curso = req.params.id
+    
     catCursos.findOne(
         { 
             where: {id_curso: id_curso},
@@ -153,19 +154,23 @@ module.exports.bulk_catCursos = (req, res, next) => {
 }; 
 
 module.exports.crear_catCursos = async (req, res, next) => {
+   
     const id_profesor = req.params.id
     const body = req.body;
+    console.log("Request  > ",body);
     body.id_profesor = id_profesor
     catCursos.findOne(
         { 
             where: {titulo: body.titulo},
             raw: true 
         }).then(curso => {
+            console.log("curso  > ",curso);
             if(curso !== null){
                 throw new Error("El curso mencionado Ya existe - Dos cursos no pueden llevar el mismo Titulo")
             }
             return uploadFolder(body.titulo, "un_nombre")
         }).then((result) => {
+            console.log("result> " + result);
             body.ruta_material_didactico = [{
                 public_id: result.public_id,
                 url: result.url,
@@ -173,6 +178,7 @@ module.exports.crear_catCursos = async (req, res, next) => {
             }]
             return catCursos.create(body)
         }).then(response => {
+            console.log("response> " + response);
             curso_creado = response
             if(response === null){
                 throw new Error("No se pudo crear el curso")
