@@ -9,7 +9,6 @@ function ListaCursos() {
     const [errorMsgModal, setErrorMsgModal] = useState("");
     const [errorMsgModalMaterial, setErrorMsgModalMaterial] = useState("");
     const [cursoId, setCursoId] = useState(null);
-    const [moduloId, setModuloId] = useState(null);
     const [file, setFile] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [successMessageMaterial, setSuccessMessageMaterial] = useState("");
@@ -94,13 +93,13 @@ function ListaCursos() {
     ];
 
     const loadCursos = async () => {
-        //var apiUrl;
-        //apiUrl = host + '/api/catcursos/listar';
-        //console.log(apiUrl)
+        var apiUrl;
+        apiUrl = host + '/api/catcursos/listar';
+        console.log(apiUrl)
         console.log("%c trayendo info de http://localhost:8000/api/catcursos/listar", 'color:green');
         try {
             //fetch("http://localhost:8000/api/catcursos/listar")
-            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/catcursos/listar`)
+            fetch(apiUrl)
                 .then(response => response.json())
                 .then(result => setCursos(result))
         } catch (error) {
@@ -171,7 +170,6 @@ function ListaCursos() {
         onChangeAnyInput();
     };
     console.log("archivo", file)
-    console.log("moduloID", moduloId)
     
     //const [modulos, setModulos] = useState([]);
 
@@ -197,32 +195,29 @@ function ListaCursos() {
                 fecha_fin: datosModal.termino_mod,
                 ruta_material_didactico: "a/una/ruta"
             }
-            //const host = import.meta.env.VITE_BACK_END_HOST + ':' + import.meta.env.VITE_BACK_END_PORT;
-            //var apiUrl;
-            //apiUrl = host + '/api/modulos/crear' + `/${cursoId}`;
+            const host = import.meta.env.VITE_BACK_END_HOST + ':' + import.meta.env.VITE_BACK_END_PORT;
+            var apiUrl;
+            apiUrl = host + '/api/modulos/crear' + `/${cursoId}`;
             console.log(objectModulo)
 
-            //if (apiUrl.length != 0) {
-            //    console.log("######### " + apiUrl)
-                fetch(`${import.meta.env.VITE_BACKEND_URL}/api/modulos/crear/${cursoId}`, {
+            if (apiUrl.length != 0) {
+                console.log("######### " + apiUrl)
+                fetch(apiUrl, {
                     method: 'POST',
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(objectModulo)
                 }).then(response => {
-                    const data = response.json();
-                    return data;
-                }).then(dataRes => {
-                    console.log(dataRes)
-                    setModuloId(dataRes.modulo.id_modulo)
-                    if (dataRes.message == "Se ha creado el modulo") {
-                        //console.log("modulo creado");
+                    console.log(response);
+                    //return response.json;
+                    if (response.status == 201) {
+                        console.log("modulo creado");
                         setSuccessMessage("Módulo creado satisfactoriamente.");
-                        return dataRes;
+                        return response.json;
                     } else {
                         setErrorMsgModal("No fue posible crear el módulo.")
                     }
-                })
-            //}
+                });
+            }
         } catch (event) {
             console.log("################## " + event);
             setErrorMsgModal("No existe conexión")
@@ -243,17 +238,17 @@ function ListaCursos() {
             return
         }
         try {
-            //const host = import.meta.env.VITE_BACK_END_HOST + ':' + import.meta.env.VITE_BACK_END_PORT;
-            //var apiUrl;
-            //apiUrl = host + '/api/modulos/subir' + `/${cursoId}`;
-            //console.log("api: "+apiUrl)
-            //if (apiUrl.length != 0) {
-            //   console.log("######### " + apiUrl)
+            const host = import.meta.env.VITE_BACK_END_HOST + ':' + import.meta.env.VITE_BACK_END_PORT;
+            var apiUrl;
+            apiUrl = host + '/api/modulos/subir' + `/${cursoId}`;
+              console.log("api: "+apiUrl)
+            if (apiUrl.length != 0) {
+                console.log("######### " + apiUrl)
 
                 const formData = new FormData()
                 formData.append('file', file)
 
-                fetch(`${import.meta.env.VITE_BACKEND_URL}/api/modulos/subir/${moduloId}`, {
+                fetch(apiUrl, {
                     method: 'POST',
                     //headers: { "Content-Type": "application/json" },
                     body: formData
@@ -262,14 +257,13 @@ function ListaCursos() {
                     //return response.json;
                     if (response.status == 200) {
                         console.log("material creado");
-                        setModuloId(null)
                         setSuccessMessageMaterial("El archivo se cargo correctamente.");
-                        return response.json();
+                        return response.json;
                     } else {
                         setErrorMsgModalMaterial("No fue posible cargar el archivo.")
                     }
                 });
-           //}
+            }
         } catch (event) {
             console.log("################## " + event);
             setErrorMsgModalMaterial("No existe conexión")
