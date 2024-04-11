@@ -29,7 +29,7 @@ function Sidebar({ cursoDetail, id_curso }) {
                 </>}
                 </div>
             </Col>
-            <Col>
+            <Col md={5}>
                 <div className="overflow-y-scroll" style={{height: "65vh"}}>
                     <ModuleList cursoDetail={cursoDetail} handleUrl={handleUrl} id_curso={id_curso}/>
                 </div>
