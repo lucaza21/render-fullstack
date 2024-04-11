@@ -191,7 +191,7 @@ module.exports.crear_modulo = (req, res, next) => {
             if(responseDelete.result !== "ok"){
                 throw new Error("No se pudo crear el modulo en cloudinary")
             }
-            return res.status(201).json( {message:' Se ha creado el modulo', modulo: modulo_creado })
+            return res.status(201).json( {message:'Se ha creado el modulo', modulo: modulo_creado })
         }).catch((error) =>{
             return res.status(400).json({ message: `Error creando modulo: - ${error.name}: ${error.message}`});
         })
