@@ -32,7 +32,7 @@ function LayoutProfesor() {
 
   return (
     <>
-      <div className="container-fluid" style={{height: "65vh", width: '90vw'}}>
+      <div className="container-fluid" style={{height: "65vh", width: '75vw'}}>
         <div className="row">
           {/*INICIO SECCIÓN MENÚ*/}
           <div className="col-lg-3 border-end ">

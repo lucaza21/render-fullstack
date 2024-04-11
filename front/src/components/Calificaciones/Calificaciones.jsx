@@ -12,7 +12,7 @@ function Calificaciones() {
   
   return (<>
     {/* <div>Calificaciones</div> */}
-    <div className="overflow-y-scroll container text-center" style={{height: "65vh", width: '930px'}}>
+    <div className="overflow-y-scroll" style={{height: "65vh", width: '930px'}}>
     <div className='container' >
       <NameCurses alumno={alumno}/>
     </div>

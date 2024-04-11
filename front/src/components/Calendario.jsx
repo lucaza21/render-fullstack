@@ -37,16 +37,16 @@ function Calendario() {
             <div className="container-fluid">
                 {/*SECCIÓN TITULO*/}
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-10">
                         <p className="h4" style={{ textAlign: "center" }}>Calendario</p>
+                        <hr className="border-1"></hr>
                     </div>
                 </div>
                 {/*FIN SECCIÓN TITULO*/}
-                <hr className="border-1"></hr>
+                
 
                 <div className="row">
-                    <div className="col-md-1"></div>
-                    <div className="col-md-10" style={{ height: "70vh", width: "100vw" }}>
+                    <div className="col-md-10" style={{ height: "65vh"}}>
                         <Calendar
                             localizer={localizer}
                             events={eventos}

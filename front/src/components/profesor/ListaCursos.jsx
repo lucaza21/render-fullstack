@@ -207,12 +207,13 @@ function ListaCursos() {
             <div className="container-fluid">
                 {/*SECCIÓN TITULO*/}
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-10">
                         <p className="h4" style={{ textAlign: "center" }}>Listado de Cursos</p>
+                        <hr className="border-1"></hr>
                     </div>
                 </div>
                 {/*FIN SECCIÓN TITULO*/}
-                <hr className="border-1"></hr>
+                
 
                 {/*<div className="row">
                     <div className="col-md-12">
@@ -221,7 +222,7 @@ function ListaCursos() {
                 </div>*/}
 
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-10">
                         {/*NUEVA TABLA*/}
                         <DataTable
                             columns={columns}

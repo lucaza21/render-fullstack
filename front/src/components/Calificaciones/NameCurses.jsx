@@ -59,8 +59,10 @@ function NameCurses({ alumno }) {
                     <Card key={curso.id_curso}>
                         <Accordion.Item eventKey={curso.id_curso}>
                             <Accordion.Header>
-                                <h3 className="card-title">{curso.titulo}</h3>
-                                <JournalBookmarkFill size={20} />
+                            <div className='d-flex flex-column align-items-start justify-content-between'>
+                                <div><JournalBookmarkFill size={20} /></div>
+                                <div><h3 className="card-title">{curso.titulo}</h3></div>
+                            </div>
                             </Accordion.Header>
                             <Accordion.Body>
                                 {curso.modulos.map(modulo => (

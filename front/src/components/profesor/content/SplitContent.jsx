@@ -5,6 +5,8 @@ import { Journals, FilePlay, FolderFill } from 'react-bootstrap-icons'
 import Player from '../../Player/Player'
 import ContentList from './ContentList'
 
+import { Col, Container, Row } from 'react-bootstrap'
+
 
 function SplitContent({ entregasPorProfesor }) {
 
@@ -17,22 +19,26 @@ function SplitContent({ entregasPorProfesor }) {
   return (
     <div>
 
-        <div className='container-fluid' >
-        <div className='row'>
-            <div className="col-lg-8">
-                {archUrl.includes("pdf") ? 
-                <div className='container'>
-                    <iframe src={archUrl} width="90%" height="450px" />
-                </div> : <>
-                    
-                </>}
-            </div>
-            <div className="col-lg-4 overflow-y-scroll" style={{ height: "65vh"}}>
-                <ContentList entregasPorProfesor={entregasPorProfesor} handleUrl={handleUrl}/>
-            </div>
-            {/* {JSON.stringify(cursoDetail)} */}
-            </div>   
-        </div>
+        <Container>
+            <Row className="">
+                <Col>
+                    <div style={{height: "65vh"}}>
+                        {archUrl.includes("pdf") ? 
+                        <div className='container'>
+                            <iframe src={archUrl} width="500px" height="450px" />
+                        </div> : <>
+                            {null}
+                        </>}
+                    </div>
+                </Col>
+                <Col  md={5}>
+                    <div className="overflow-y-scroll" style={{ height: "65vh"}}>
+                        <ContentList entregasPorProfesor={entregasPorProfesor} handleUrl={handleUrl}/>
+                    </div>
+                </Col>
+                {/* {JSON.stringify(cursoDetail)} */}
+            </Row>   
+        </Container>
     </div>
   )
 }
