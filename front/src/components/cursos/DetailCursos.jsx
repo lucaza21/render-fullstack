@@ -33,7 +33,7 @@ const { id_curso } = useParams()
     <>
     {cursoDetail?.modulos[0]?.id_modulo ?
       <>
-      <div className="container text-center">
+      <div className="container text-center" style={{height: "65vh", width: '930px'}}>
         {/* <Link to="/cursos"> Volver al listado de cursos </Link> */}
         <Sidebar cursoDetail={cursoDetail} id_curso={id_curso}/>
       </div>
