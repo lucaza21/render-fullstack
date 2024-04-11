@@ -5,8 +5,8 @@ export default function heather() {
         <>
             <div className="fixed-top">
                 {/* heather */}
-                <nav className="navbar heather">
-                    <a className="navbar-brand" href="#">
+                <nav className="navbar heather ">
+                    <a className="navbar-brand mx-2" href="#">
                         <img
                             src={imgLogo}
                             width={83.29}

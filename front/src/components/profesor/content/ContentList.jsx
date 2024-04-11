@@ -20,7 +20,7 @@ function ContentList({entregasPorProfesor, handleUrl} ) {
               {profesor.cat_cursos.map((curso) => (
                 <div key={curso.id_curso}>
                   <hr className="sidebar-divider" />
-                  <Accordion.Item eventKey={curso.titulo}>
+                  <Accordion.Item eventKey={curso.id_curso}>
                   <Accordion.Header>
                     <div className="d-flex flex-column align-items-center justify-content-between">
                       <div className="">

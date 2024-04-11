@@ -85,15 +85,15 @@ function AltaCurso() {
                 semanas: datosCurso.semanas,
                 ruta_material_didactico: "/una/ruta"
             }
-            const host = import.meta.env.VITE_BACK_END_HOST + ':' + import.meta.env.VITE_BACK_END_PORT;
+           // const host = import.meta.env.VITE_BACK_END_HOST + ':' + import.meta.env.VITE_BACK_END_PORT;
             
-            var apiUrl;
-            apiUrl = host + import.meta.env.VITE_ENDPOINT_CATCURSO_CREAR + profesor.id;
-            console.log(object)
+           // var apiUrl;
+           // apiUrl = host + import.meta.env.VITE_ENDPOINT_CATCURSO_CREAR + profesor.id;
+            //console.log(object)
 
-            if (apiUrl.length != 0) {
-                console.log("######### " + apiUrl)
-                fetch(apiUrl, {
+            //if (apiUrl.length != 0) {
+            //    console.log("######### " + apiUrl)
+                fetch(`${import.meta.env.VITE_BACKEND_URL}/api/catcursos/crear/${profesor.id}`, {
                     method: 'POST',
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(object)
@@ -104,12 +104,12 @@ function AltaCurso() {
                         if (response.status == 201) {
                             console.log("curso creado");
                             setSuccessMessage("Curso creado satisfactoriamente.");
-                            return response.json;                            
+                            return response.json();                            
                         } else {
                             setErrorMsg("No fue posible crear el curso.")
                         }
                     });
-            }
+            setSuccessMessage("")
         } catch (event) {
             console.log("################## " + e);
             setErrorMsg("No existe conexión")

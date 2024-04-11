@@ -147,7 +147,7 @@ module.exports.crear_actividad = (req, res, next) => {
             }
             //console.log(responseActividad.ruta_actividad[0].public_id)
             deleteImage(responseActividad.ruta_actividad[0].public_id)
-            return res.status(201).json( {message:' se ha creado la actividad', curso: responseActividad } )
+            return res.status(201).json( {message:'se ha creado la actividad', actividad: responseActividad } )
         }).catch((error) =>{
             return res.status(400).json({ message: `Error creando la actividad: - ${error.name}: ${error.message}`});
         })

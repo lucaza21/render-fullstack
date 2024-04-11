@@ -51,6 +51,24 @@ module.exports.listar_modulo = (req, res, next) => {
      
 };
 
+module.exports.detalle_curso_modulo = (req, res, next) => {
+    console.log(req.body)
+    const id_curso = req.params.id
+    Modulo.findAll(
+        { 
+            where: {id_curso: id_curso},
+            }
+        ).then(curso => {
+            if(curso === null){
+                throw new Error("El curso mencionado no existe")
+            }
+            
+            return res.status(200).json(curso)
+        }).catch((error) => {
+            return res.status(400).json({message: `Error listando cursos - ${error.name}: ${error.message}`});
+        });
+};
+
 module.exports.detalle_modulo = (req, res, next) => {
     //console.log(req.body)
     const id_modulo = req.params.id
@@ -250,7 +268,7 @@ module.exports.subirArchivos = (req, res, next) => {
             fs.unlink(req.file.path)
             return res.status(400).json({Error: `Error subiendo el archivo - ${error.name}: ${error.message}`});
         })
-    };
+};
 
 module.exports.editar_modulo = (req, res )=>{
 

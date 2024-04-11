@@ -2,7 +2,8 @@ import DataTable from 'react-data-table-component';
 import registro from '../../assets/iconos/registro.png'
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'react';
-//import iconMaterial from '../../assets/iconos/archivo.png'
+import iconMaterial from '../../assets/iconos/archivo.png'
+import ListarModulosCurso from './ListarModulosCurso'
 
 function ListaCursos() {
 
@@ -89,7 +90,7 @@ function ListaCursos() {
             name: 'Material',
             selector: row => 
             <button className='btn' title="Agregar Material" data-bs-toggle="modal"
-                data-bs-target="#altaMaterial" onClick={() => setCursoId(row.id_curso)}><img width={15} height={15} src={registro} /></button>,  
+                data-bs-target="#altaMaterial" onClick={() => setCursoId(row.id_curso)}><img width={15} height={15} src={iconMaterial} /></button>,  
         },
     ];
 
@@ -118,7 +119,7 @@ function ListaCursos() {
     //ExpandedComponent   
 
      //const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
-     const ExpandedComponent = ({ data }) => <pre><ListarModulosCurso/></pre>; 
+     const ExpandedComponent = ({ data }) => <pre><ListarModulosCurso data={data}/></pre>;
     
     //ExpandedComponent
 
@@ -222,7 +223,7 @@ function ListaCursos() {
                         setErrorMsgModal("No fue posible crear el módulo.")
                     }
                 })
-            //}
+            
         } catch (event) {
             console.log("################## " + event);
             setErrorMsgModal("No existe conexión")
@@ -310,6 +311,8 @@ function ListaCursos() {
                             fixedHeader
                             fixedHeaderScrollHeight='800px'
                             highlightOnHover
+                            expandableRows
+                            expandableRowsComponent={ExpandedComponent}
                         />
                         {/*FIN DE NUEVA TABLA*/}
                     </div>
