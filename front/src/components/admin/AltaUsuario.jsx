@@ -89,15 +89,15 @@ function AltaUsuario() {
             var urlAltaUsr;
             //perfil 1 == alumno
             if(datos.perfil == 1){
-                urlAltaUsr = host + import.meta.env.VITE_ENDPOINT_ALTA_USER_ALUMNO;
+                urlAltaUsr = `${import.meta.env.VITE_BACKEND_URL}/api/api/alumnos/crear`;
                 
             }else if (datos.perfil == 2){ //perfil 2 == profesor
-                urlAltaUsr = host + import.meta.env.VITE_ENDPOINT_ALTA_USER_PROFESOR;
+                urlAltaUsr = `${import.meta.env.VITE_BACKEND_URL}/api/api/profesors/crear`;
                 
             }else if(datos.perfil === 3) {// perfil 3 == admin
 
             }
-            var statusResponse;
+            //var statusResponse;
             if(urlAltaUsr.length != 0){
                 console.log("######### " +urlAltaUsr)
                 fetch(urlAltaUsr,{

@@ -90,7 +90,8 @@ function ListarModulosCurso({ data }) {
     console.log("moduloId",moduloId)
     async function altaActividad(event, moduloId) {
         console.log("idModulo: "+moduloId)
-        onChangeAnyInput()
+        //onChangeAnyInput()
+        dismissError()
         event.preventDefault()
         if (!readyToSubmitActividad()) {
             setErrorMsgModalActividad("Se deben llenar todos los campos")
@@ -190,10 +191,10 @@ function ListarModulosCurso({ data }) {
         onChangeAnyInput();
     };
 
-   /*  function dismissError() {
+    function dismissError() {
         setErrorMsgModalActividad("")
         setSuccessMessageActividad("")
-    } */
+    }
 
     function onChangeAnyInput() {
         setErrorMsgModalActividad("")
